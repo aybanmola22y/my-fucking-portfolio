@@ -20,28 +20,24 @@ import { cn } from "@/lib/utils"
 import { SectionHeading } from "@/components/section-heading"
 
 const contactInfo: {
-  num: string
   icon: IconType
   label: string
   value: string
   href: string
 }[] = [
   {
-    num: "01",
     icon: TbAt,
     label: "Email",
     value: "molatojohnaivanneofficial@gmail.com",
     href: "mailto:molatojohnaivanneofficial@gmail.com",
   },
   {
-    num: "02",
     icon: TbDeviceMobile,
     label: "Phone",
     value: "+63 993 739 2300",
     href: "tel:+639937392300",
   },
   {
-    num: "03",
     icon: TbWorldLatitude,
     label: "Location",
     value: "Puerto Princesa, Philippines",
@@ -108,10 +104,6 @@ export function ContactSection() {
                     viewport={{ once: true }}
                     className="group relative flex items-center gap-4 overflow-hidden rounded-xl px-3 py-3.5 transition-all duration-300 hover:bg-primary/[0.04]"
                   >
-                    <div className="pointer-events-none absolute inset-y-2 left-0 w-0.5 origin-top scale-y-0 rounded-full bg-primary transition-transform duration-300 group-hover:scale-y-100" />
-                    <span className="w-6 shrink-0 font-mono text-[11px] text-primary/40">
-                      {info.num}
-                    </span>
                     <Icon className="h-5 w-5 shrink-0 text-primary transition-transform duration-300 group-hover:scale-110" />
                     <div className="min-w-0 flex-1">
                       <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">

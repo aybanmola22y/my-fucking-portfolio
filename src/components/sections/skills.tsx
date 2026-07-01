@@ -1,8 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Globe, Building2, Calculator, Layers } from "lucide-react"
-import type { LucideIcon } from "lucide-react"
+import { Braces } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { SectionHeading } from "@/components/section-heading"
 import {
@@ -21,7 +20,9 @@ import {
   SiSupabase,
   SiGit,
   SiGithub,
+  SiVercel,
 } from "react-icons/si"
+import { TbBrandVscode } from "react-icons/tb"
 import { IconType } from "react-icons"
 
 const ShadcnIcon = ({ size = 16 }: { size?: number }) => (
@@ -36,6 +37,12 @@ const ShadcnIcon = ({ size = 16 }: { size?: number }) => (
   >
     <path d="M5 19L19 5" />
     <path d="M9 19L19 9" />
+  </svg>
+)
+
+const CursorIcon = ({ size = 16 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+    <path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23" />
   </svg>
 )
 
@@ -61,49 +68,21 @@ const backendSkills: Skill[] = [
   { name: "MySQL", icon: SiMysql, iconClass: "text-blue-700" },
   { name: "Firebase", icon: SiFirebase, iconClass: "text-amber-500" },
   { name: "Supabase", icon: SiSupabase, iconClass: "text-emerald-500" },
+  { name: "REST APIs", icon: Braces, iconClass: "text-primary" },
 ]
 
 const toolsSkills: Skill[] = [
+  { name: "Visual Studio Code", icon: TbBrandVscode, iconClass: "text-blue-500" },
+  { name: "Cursor AI", icon: CursorIcon, iconClass: "text-foreground" },
   { name: "Git", icon: SiGit, iconClass: "text-orange-600" },
   { name: "GitHub", icon: SiGithub, iconClass: "text-foreground" },
+  { name: "Vercel", icon: SiVercel, iconClass: "text-foreground" },
 ]
 
 const skillCategories: { num: string; title: string; skills: Skill[] }[] = [
   { num: "01", title: "Frontend", skills: frontendSkills },
   { num: "02", title: "Backend & Database", skills: backendSkills },
-  { num: "03", title: "Tools & Version Control", skills: toolsSkills },
-]
-
-const services: {
-  title: string
-  description: string
-  icon: LucideIcon
-  tags: string[]
-}[] = [
-  {
-    title: "Website Development",
-    description: "Professional, responsive websites for businesses and personal brands — built with modern design, fast performance, and a smooth user experience.",
-    icon: Globe,
-    tags: ["Responsive", "SEO-ready", "Modern UI"],
-  },
-  {
-    title: "Custom Web Systems",
-    description: "Tailor-made web applications designed around your company's workflows — from internal tools to full-scale operational platforms.",
-    icon: Layers,
-    tags: ["Scalable", "Secure", "Custom fit"],
-  },
-  {
-    title: "Payroll Systems",
-    description: "Automated payroll solutions with employee records, salary computation, deductions, and reporting — built to fit your business rules.",
-    icon: Calculator,
-    tags: ["Automated", "Reports", "Records"],
-  },
-  {
-    title: "Company Management Systems",
-    description: "End-to-end systems for HR, inventory, attendance, and data management — giving your team one place to run day-to-day operations.",
-    icon: Building2,
-    tags: ["HR", "Inventory", "Operations"],
-  },
+  { num: "03", title: "Tools & Environment", skills: toolsSkills },
 ]
 
 const workExperience = [
@@ -155,8 +134,6 @@ const ExperienceItem = ({
       />
 
       <div className="relative rounded-xl px-3 py-2 transition-all duration-300 hover:bg-primary/[0.04]">
-        <div className="pointer-events-none absolute inset-y-2 left-0 w-0.5 origin-top scale-y-0 rounded-full bg-primary transition-transform duration-300 group-hover:scale-y-100" />
-
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <span className="font-mono text-[10px] text-primary/40">{number}</span>
           <span className="font-mono text-[11px] text-muted-foreground">{exp.period}</span>
@@ -241,56 +218,11 @@ function SkillCategory({
   )
 }
 
-const ServiceCard = ({
-  service,
-  index,
-}: {
-  service: (typeof services)[number]
-  index: number
-}) => {
-  const Icon = service.icon
-  const number = String(index + 1).padStart(2, "0")
-  const ease = [0.22, 1, 0.36, 1] as const
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, delay: index * 0.08, ease }}
-      viewport={{ once: true, margin: "-40px" }}
-      className="group relative h-full"
-    >
-      <div className="relative h-full overflow-hidden rounded-xl px-4 py-5 transition-all duration-300 hover:bg-primary/[0.04] md:px-5">
-        <div className="pointer-events-none absolute inset-y-3 left-0 w-0.5 origin-top scale-y-0 rounded-full bg-primary transition-transform duration-300 group-hover:scale-y-100" />
-
-        <div className="flex items-start gap-3">
-          <span className="mt-0.5 font-mono text-[11px] text-primary/40">{number}</span>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <Icon
-                className="h-4 w-4 shrink-0 text-primary transition-transform duration-300 group-hover:scale-110"
-                strokeWidth={1.6}
-              />
-              <h4 className="font-sans font-normal text-[1.05rem] leading-snug tracking-tight lowercase md:text-lg">
-                {service.title}
-              </h4>
-            </div>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
-            <p className="mt-3 font-mono text-[10px] text-muted-foreground/80">
-              {service.tags.join(" · ")}
-            </p>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
 export function SkillsSection() {
   return (
-    <section id="skills" className="py-20 px-4 md:px-8 bg-muted/30">
+    <section id="skills" className="min-h-screen py-20 px-4 md:px-8 bg-muted/30">
       <div className="max-w-6xl mx-auto">
-        <SectionHeading number="II" title="skills & experience" />
+        <SectionHeading number="II" title="my stack & experience" />
 
         <div className="grid gap-12 lg:grid-cols-2">
           <motion.div
@@ -333,29 +265,6 @@ export function SkillsSection() {
             </div>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          viewport={{ once: true }}
-          className="mt-20"
-        >
-          <div className="mb-10 max-w-2xl">
-            <h3 className="font-sans font-normal mb-3 text-xl tracking-tight lowercase md:text-2xl">
-              services i offer
-            </h3>
-            <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
-              From a polished business website to a full custom system — I build digital solutions that look professional and work reliably for your team.
-            </p>
-          </div>
-
-          <div className="grid gap-1 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-6">
-            {services.map((service, index) => (
-              <ServiceCard key={service.title} service={service} index={index} />
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   )

@@ -5,7 +5,13 @@ import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 
-export function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
+export function ThemeToggle({
+  mobile = false,
+  onToggle,
+}: {
+  mobile?: boolean
+  onToggle?: () => void
+}) {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
 
@@ -17,10 +23,15 @@ export function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
   const label = mounted ? (isDark ? "Light mode" : "Dark mode") : "Theme"
   const Icon = mounted && isDark ? Sun : Moon
 
+  const handleToggle = () => {
+    setTheme(isDark ? "light" : "dark")
+    onToggle?.()
+  }
+
   return (
     <button
       type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={handleToggle}
       className={cn(
         "inline-flex w-fit items-center gap-2.5 text-muted-foreground transition-colors duration-200 hover:text-foreground",
         mobile ? "gap-3 text-base" : "text-[15px]"

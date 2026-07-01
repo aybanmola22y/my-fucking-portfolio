@@ -3,9 +3,16 @@
 import { motion, useInView } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { MapPin, GraduationCap, Code2, Palette, Server, Boxes, Sparkles, Zap, Puzzle, Target } from "lucide-react"
+import { MapPin, GraduationCap, School, Cake, Code2, Palette, Server, Boxes, Sparkles, Zap, Puzzle, Target } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
+
+const profileMeta = {
+  location: "Puerto Princesa, PH",
+  course: "Information Technology",
+  school: "Palawan State University",
+  age: 23,
+}
 
 const stats: { value: number; suffix: string; label: string }[] = [
   { value: 5, suffix: "+", label: "Projects Built" },
@@ -106,7 +113,6 @@ function StrengthCard({
     >
       <div className="relative overflow-hidden rounded-2xl border border-primary/10 p-4 transition-all duration-300 hover:border-primary/25 hover:bg-primary/[0.03] md:p-5">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-primary/70 via-primary/30 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
-        <div className="pointer-events-none absolute inset-y-3 left-0 w-0.5 origin-top scale-y-0 rounded-full bg-primary transition-transform duration-300 group-hover:scale-y-100" />
 
         <div className="flex items-start gap-3">
           <span className="mt-0.5 font-mono text-[11px] text-primary/40">{number}</span>
@@ -139,26 +145,32 @@ function PrincipleItem({
   index: number
 }) {
   const Icon = item.icon
-  const number = String(index + 1).padStart(2, "0")
   const ease = [0.22, 1, 0.36, 1] as const
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -12 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.35, delay: index * 0.07, ease }}
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.08, ease }}
       viewport={{ once: true }}
-      className="group relative flex items-start gap-3 overflow-hidden rounded-xl px-3 py-3 transition-all duration-300 hover:bg-primary/[0.04]"
+      className="group relative"
     >
-      <div className="pointer-events-none absolute inset-y-2 left-0 w-0.5 origin-top scale-y-0 rounded-full bg-primary transition-transform duration-300 group-hover:scale-y-100" />
-      <span className="mt-0.5 font-mono text-[11px] text-primary/40">{number}</span>
-      <Icon
-        className="mt-0.5 h-4 w-4 shrink-0 text-primary transition-transform duration-300 group-hover:scale-110"
-        strokeWidth={1.6}
-      />
-      <div className="min-w-0 text-left">
-        <p className="text-sm font-medium leading-none">{item.label}</p>
-        <p className="mt-1 text-[11px] leading-snug text-muted-foreground">{item.desc}</p>
+      <div className="relative overflow-hidden rounded-2xl border border-primary/10 bg-background/50 p-4 transition-all duration-300 hover:border-primary/25 hover:bg-primary/[0.03]">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-primary/70 via-primary/30 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+
+        <div className="flex items-start gap-3.5">
+          <Icon
+            className="mt-0.5 h-4 w-4 shrink-0 text-primary transition-transform duration-300 group-hover:scale-110"
+            strokeWidth={1.5}
+          />
+
+          <div className="min-w-0 flex-1 pt-0.5">
+            <p className="font-sans text-sm font-normal leading-snug tracking-tight lowercase">
+              {item.label}
+            </p>
+            <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
+          </div>
+        </div>
       </div>
     </motion.div>
   )
@@ -200,8 +212,9 @@ export function AboutSection() {
                     src="/profile.png"
                     alt="John Aivanne Molato"
                     fill
-                    className="object-cover object-[50%_22%]"
-                    sizes="128px"
+                    className="object-cover object-center"
+                    sizes="256px"
+                    quality={95}
                     priority
                   />
                 </div>
@@ -213,16 +226,29 @@ export function AboutSection() {
               <h3 className="mt-5 font-sans font-normal text-xl tracking-tight">John Aivanne Molato</h3>
               <p className="mt-1 font-mono text-sm text-muted-foreground">Full-stack Web Developer</p>
 
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-xs text-muted-foreground lg:justify-start">
-                <span className="inline-flex items-center gap-1.5">
-                  <MapPin className="h-3.5 w-3.5 text-primary" strokeWidth={1.6} />
-                  Puerto Princesa, PH
-                </span>
-                <span className="hidden text-primary/30 sm:inline">·</span>
-                <span className="inline-flex items-center gap-1.5">
-                  <GraduationCap className="h-3.5 w-3.5 text-primary" strokeWidth={1.6} />
-                  Information Technology
-                </span>
+              <div className="mt-4 space-y-2 font-mono text-xs text-muted-foreground">
+                <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 lg:justify-start">
+                  <span className="inline-flex items-center gap-1.5">
+                    <MapPin className="h-3.5 w-3.5 text-primary" strokeWidth={1.6} />
+                    {profileMeta.location}
+                  </span>
+                  <span className="hidden text-primary/30 sm:inline">·</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <GraduationCap className="h-3.5 w-3.5 text-primary" strokeWidth={1.6} />
+                    {profileMeta.course}
+                  </span>
+                </div>
+                <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 lg:justify-start">
+                  <span className="inline-flex items-center gap-1.5">
+                    <School className="h-3.5 w-3.5 text-primary" strokeWidth={1.6} />
+                    {profileMeta.school}
+                  </span>
+                  <span className="hidden text-primary/30 sm:inline">·</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Cake className="h-3.5 w-3.5 text-primary" strokeWidth={1.6} />
+                    {profileMeta.age} years old
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -230,7 +256,10 @@ export function AboutSection() {
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 What I Bring
               </p>
-              <div className="mt-3 grid gap-0.5">
+              <p className="mt-2 max-w-xs text-xs leading-relaxed text-muted-foreground">
+                The principles I follow on every project — from first message to final delivery.
+              </p>
+              <div className="mt-4 grid gap-3">
                 {workPrinciples.map((item, index) => (
                   <PrincipleItem key={item.label} item={item} index={index} />
                 ))}

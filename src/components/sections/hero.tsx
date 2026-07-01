@@ -1,8 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
+import { ArrowDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
+
+const heroLinks = [
+  { label: "view projects", href: "#projects" },
+  { label: "my stack", href: "#skills" },
+  { label: "get in touch", href: "#contact" },
+]
 
 export function HeroSection() {
   return (
@@ -47,23 +53,18 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-10 mb-12 flex items-center justify-center gap-4 md:mt-12"
+          className="mt-10 mb-12 flex flex-wrap items-center justify-center gap-3 md:mt-12"
         >
-          <Button variant="outline" size="icon" asChild>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-              <Github className="h-5 w-5" />
-            </a>
-          </Button>
-          <Button variant="outline" size="icon" asChild>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-              <Linkedin className="h-5 w-5" />
-            </a>
-          </Button>
-          <Button variant="outline" size="icon" asChild>
-            <a href="#contact">
-              <Mail className="h-5 w-5" />
-            </a>
-          </Button>
+          {heroLinks.map((link, index) => (
+            <Button
+              key={link.href}
+              variant={index === heroLinks.length - 1 ? "default" : "outline"}
+              className="font-mono text-xs lowercase tracking-wide"
+              asChild
+            >
+              <a href={link.href}>{link.label}</a>
+            </Button>
+          ))}
         </motion.div>
 
         <motion.div

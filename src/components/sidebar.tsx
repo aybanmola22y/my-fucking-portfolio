@@ -15,6 +15,8 @@ const navItems = [
   { name: "Contact", href: "#contact", icon: Mail },
 ]
 
+const drawerEase = [0.22, 1, 0.36, 1] as const
+
 export function Sidebar() {
   const [isOpen, setIsOpen] = React.useState(false)
   const [activeSection, setActiveSection] = React.useState("home")
@@ -102,6 +104,7 @@ export function Sidebar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: drawerEase }}
             className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm md:hidden"
             onClick={() => setIsOpen(false)}
           />
@@ -139,11 +142,11 @@ export function Sidebar() {
       </aside>
 
       {/* Mobile drawer */}
-      <aside
-        className={cn(
-          "fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-border/60 bg-background px-7 py-10 transition-transform duration-300 md:hidden",
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        )}
+      <motion.aside
+        initial={false}
+        animate={{ x: isOpen ? 0 : "-100%" }}
+        transition={{ duration: 0.35, ease: drawerEase }}
+        className="fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-border/60 bg-background px-7 py-10 md:hidden"
       >
         <div className="mb-12">
           <p className="font-sans font-normal text-lg tracking-tight">John Aivanne</p>
@@ -170,9 +173,9 @@ export function Sidebar() {
         </nav>
 
         <div className="mt-auto pt-8">
-          <ThemeToggle mobile />
+          <ThemeToggle mobile onToggle={() => setIsOpen(false)} />
         </div>
-      </aside>
+      </motion.aside>
     </>
   )
 }
