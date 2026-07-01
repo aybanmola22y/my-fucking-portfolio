@@ -111,7 +111,7 @@ function StrengthCard({
       viewport={{ once: true }}
       className="group relative"
     >
-      <div className="relative overflow-hidden rounded-2xl border border-primary/10 p-4 transition-all duration-300 hover:border-primary/25 hover:bg-primary/[0.03] md:p-5">
+      <div className="relative overflow-hidden rounded-2xl border border-primary/10 p-3 transition-all duration-300 hover:border-primary/25 hover:bg-primary/[0.03] md:p-4">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-primary/70 via-primary/30 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
 
         <div className="flex items-start gap-3">
@@ -155,7 +155,7 @@ function PrincipleItem({
       viewport={{ once: true }}
       className="group relative"
     >
-      <div className="relative overflow-hidden rounded-2xl border border-primary/10 bg-background/50 p-4 transition-all duration-300 hover:border-primary/25 hover:bg-primary/[0.03]">
+      <div className="relative overflow-hidden rounded-2xl border border-primary/10 bg-background/50 p-3 transition-all duration-300 hover:border-primary/25 hover:bg-primary/[0.03] md:p-3.5">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-primary/70 via-primary/30 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
 
         <div className="flex items-start gap-3.5">
@@ -168,7 +168,7 @@ function PrincipleItem({
             <p className="font-sans text-sm font-normal leading-snug tracking-tight lowercase">
               {item.label}
             </p>
-            <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
           </div>
         </div>
       </div>
@@ -180,15 +180,15 @@ export function AboutSection() {
   const ease = [0.22, 1, 0.36, 1] as const
 
   return (
-    <section id="about" className="relative overflow-hidden py-24 px-4 md:px-8">
+    <section id="about" className="relative overflow-x-hidden px-4 py-14 md:px-8 lg:py-12">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.4)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.4)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_at_center,black_10%,transparent_70%)] opacity-50" />
       <div className="pointer-events-none absolute -left-24 top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 bottom-10 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl">
-        <SectionHeading number="I" title="about me" />
+        <SectionHeading number="I" title="about me" className="mb-8 md:mb-9" />
 
-        <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
+        <div className="grid items-start gap-6 lg:grid-cols-12 lg:gap-8">
           {/* Profile */}
           <motion.div
             initial={{ opacity: 0, x: -28 }}
@@ -201,8 +201,8 @@ export function AboutSection() {
               Profile
             </p>
 
-            <div className="mt-5 flex flex-col items-center text-center lg:items-start lg:text-left">
-              <div className="relative h-32 w-32 shrink-0">
+            <div className="mt-4 flex flex-col items-center text-center lg:items-start lg:text-left">
+              <div className="relative h-28 w-28 shrink-0 lg:h-[7.5rem] lg:w-[7.5rem]">
                 <div
                   aria-hidden
                   className="absolute inset-0 rounded-full border border-dashed border-primary/25"
@@ -223,7 +223,7 @@ export function AboutSection() {
                 </span>
               </div>
 
-              <h3 className="mt-5 font-sans font-normal text-xl tracking-tight">John Aivanne Molato</h3>
+              <h3 className="mt-4 font-sans text-lg font-normal tracking-tight md:text-xl">John Aivanne Molato</h3>
               <p className="mt-1 font-mono text-sm text-muted-foreground">Full-stack Web Developer</p>
 
               <div className="mt-4 space-y-2 font-mono text-xs text-muted-foreground">
@@ -252,14 +252,14 @@ export function AboutSection() {
               </div>
             </div>
 
-            <div className="mt-8 border-t border-primary/10 pt-6">
+            <div id="about-what-i-bring" className="mt-6 border-t border-primary/10 pt-5">
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 What I Bring
               </p>
-              <p className="mt-2 max-w-xs text-xs leading-relaxed text-muted-foreground">
+              <p className="mt-1.5 max-w-xs text-xs leading-relaxed text-muted-foreground">
                 The principles I follow on every project — from first message to final delivery.
               </p>
-              <div className="mt-4 grid gap-3">
+              <div className="mt-3 grid gap-2">
                 {workPrinciples.map((item, index) => (
                   <PrincipleItem key={item.label} item={item} index={index} />
                 ))}
@@ -279,7 +279,7 @@ export function AboutSection() {
               turning ideas into functional digital experiences.
             </h3>
 
-            <div className="mt-5 space-y-4 text-muted-foreground">
+            <div className="mt-5 space-y-3 text-muted-foreground">
               <p className="leading-relaxed">
                 I&apos;m a passionate Full-stack Web Developer from the Philippines who specializes
                 in building modern, responsive, and user-friendly web applications — from polished
@@ -292,22 +292,22 @@ export function AboutSection() {
               </p>
             </div>
 
-            <div className="mt-8">
+            <div className="mt-6">
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 At a glance
               </p>
-              <div className="mt-4 grid grid-cols-2 gap-y-6 sm:grid-cols-4 sm:gap-y-0">
+              <div className="mt-3 grid grid-cols-2 gap-y-5 sm:grid-cols-4 sm:gap-y-0">
                 {stats.map((stat, index) => (
                   <StatItem key={stat.label} stat={stat} index={index} />
                 ))}
               </div>
             </div>
 
-            <div className="mt-10">
+            <div className="mt-7">
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 Core strengths
               </p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
                 {services.map((service, index) => (
                   <StrengthCard key={service.title} service={service} index={index} />
                 ))}

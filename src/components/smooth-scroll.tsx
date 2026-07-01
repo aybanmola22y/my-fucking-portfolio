@@ -7,6 +7,10 @@ type ScrollTarget = string | number | HTMLElement
 
 type SmoothScrollContextValue = {
   scrollTo: (target: ScrollTarget, options?: { offset?: number }) => void
+  scrollToSection: (
+    id: string,
+    options?: { padding?: number; align?: "start" | "fit" | "end" }
+  ) => void
 }
 
 const SmoothScrollContext = React.createContext<SmoothScrollContextValue | null>(null)
@@ -65,8 +69,49 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     []
   )
 
+  const scrollToSection = React.useCallback<SmoothScrollContextValue["scrollToSection"]>(
+    (id, options) => {
+      const el = document.getElementById(id)
+      if (!el) return
+
+      const padding = options?.padding ?? 32
+      const align = options?.align ?? "fit"
+      const sectionHeight = el.getBoundingClientRect().height
+      const viewportHeight = window.innerHeight
+
+      let offset: number
+      if (align === "start") {
+        offset = -padding
+      } else if (align === "end") {
+        offset = sectionHeight - viewportHeight + padding
+      } else {
+        const available = viewportHeight - padding * 2
+        const overflow = sectionHeight - available
+
+        if (overflow <= 0) {
+          offset = -(viewportHeight - sectionHeight - padding)
+        } else if (overflow <= viewportHeight * 0.18) {
+          // Slight overflow: center the section so top and bottom stay visible
+          offset = -((viewportHeight - sectionHeight) / 2)
+        } else {
+          offset = sectionHeight - viewportHeight + padding
+        }
+      }
+
+      const lenis = lenisRef.current
+      if (lenis) {
+        lenis.scrollTo(el, { offset })
+        return
+      }
+
+      const top = el.getBoundingClientRect().top + window.scrollY
+      window.scrollTo({ top: top + offset, behavior: "smooth" })
+    },
+    []
+  )
+
   return (
-    <SmoothScrollContext.Provider value={{ scrollTo }}>
+    <SmoothScrollContext.Provider value={{ scrollTo, scrollToSection }}>
       {children}
     </SmoothScrollContext.Provider>
   )

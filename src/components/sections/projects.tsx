@@ -141,7 +141,7 @@ function ProjectCard({
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="relative overflow-hidden py-24 px-4 md:px-8">
+    <section id="projects" className="relative min-h-screen overflow-hidden py-24 px-4 md:px-8">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.35)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.35)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_at_center,black_8%,transparent_72%)] opacity-40" />
       <div className="pointer-events-none absolute -right-24 top-20 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
 

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { ArrowDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useSmoothScroll } from "@/components/smooth-scroll"
 
 const heroLinks = [
   { label: "view projects", href: "#projects" },
@@ -11,6 +12,21 @@ const heroLinks = [
 ]
 
 export function HeroSection() {
+  const smoothScroll = useSmoothScroll()
+
+  const scrollToAbout = () => {
+    if (smoothScroll) {
+      smoothScroll.scrollToSection("about", { padding: 20, align: "start" })
+      return
+    }
+
+    const about = document.getElementById("about")
+    if (!about) return
+
+    const top = about.getBoundingClientRect().top + window.scrollY
+    window.scrollTo({ top: top - 20, behavior: "smooth" })
+  }
+
   return (
     <section
       id="home"
@@ -23,7 +39,7 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="font-sans font-normal text-[clamp(2.25rem,7vw,4.5rem)] leading-[1.05] tracking-tight text-foreground"
         >
-          John Aivanne Molato
+          TheAivanneEffect
         </motion.h1>
 
         <motion.p
@@ -76,7 +92,7 @@ export function HeroSection() {
             variant="ghost"
             size="lg"
             className="animate-bounce"
-            onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={scrollToAbout}
           >
             <ArrowDown className="h-6 w-6" />
           </Button>
