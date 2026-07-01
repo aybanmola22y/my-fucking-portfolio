@@ -46,9 +46,9 @@ const contactInfo: {
 ]
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com", label: "GitHub", handle: "@johnaivanne" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn", handle: "John Aivanne" },
-  { icon: Facebook, href: "https://facebook.com", label: "Facebook", handle: "John Aivanne Molato" },
+  { icon: Github, href: "https://github.com/aybanmola22y", label: "GitHub", handle: "@aybanmola22y" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/john-aivanne-molato/", label: "LinkedIn", handle: "John Aivanne Molato" },
+  { icon: Facebook, href: "https://www.facebook.com/xxxayban", label: "Facebook", handle: "John Aivanne Molato" },
 ]
 
 const fieldBase =
