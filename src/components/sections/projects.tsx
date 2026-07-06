@@ -105,7 +105,7 @@ function ProjectCard({
             </div>
           </div>
 
-          <h3 className="font-sans font-normal text-lg leading-snug tracking-tight lowercase transition-colors duration-300 group-hover:text-primary">
+          <h3 className="font-sans font-normal text-lg leading-snug tracking-tight transition-colors duration-300 group-hover:text-primary">
             {project.title}
           </h3>
 
@@ -148,7 +148,7 @@ export function ProjectsSection() {
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           number="III"
-          title="projects"
+          title="Projects"
           description="Selected work — from business websites to full-stack applications."
         />
 

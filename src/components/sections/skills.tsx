@@ -222,7 +222,7 @@ export function SkillsSection() {
   return (
     <section id="skills" className="min-h-screen py-20 px-4 md:px-8 bg-muted/30">
       <div className="max-w-6xl mx-auto">
-        <SectionHeading number="II" title="my stack & experience" />
+        <SectionHeading number="II" title="My Stack & Experience" />
 
         <div className="grid gap-12 lg:grid-cols-2">
           <motion.div

@@ -122,7 +122,7 @@ function StrengthCard({
                 className="h-4 w-4 shrink-0 text-primary transition-transform duration-300 group-hover:scale-110"
                 strokeWidth={1.6}
               />
-              <p className="font-sans font-normal text-base leading-none tracking-tight lowercase">
+              <p className="font-sans font-normal text-base leading-none tracking-tight">
                 {service.title}
               </p>
             </div>
@@ -165,7 +165,7 @@ function PrincipleItem({
           />
 
           <div className="min-w-0 flex-1 pt-0.5">
-            <p className="font-sans text-sm font-normal leading-snug tracking-tight lowercase">
+            <p className="font-sans text-sm font-normal leading-snug tracking-tight">
               {item.label}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
@@ -186,7 +186,7 @@ export function AboutSection() {
       <div className="pointer-events-none absolute -right-24 bottom-10 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl">
-        <SectionHeading number="I" title="about me" className="mb-8 md:mb-9" />
+        <SectionHeading number="I" title="About Me" className="mb-8 md:mb-9" />
 
         <div className="grid items-start gap-6 lg:grid-cols-12 lg:gap-8">
           {/* Profile */}
@@ -275,8 +275,8 @@ export function AboutSection() {
             viewport={{ once: true }}
             className="lg:col-span-7"
           >
-            <h3 className="font-sans font-normal text-[clamp(1.35rem,3.5vw,1.85rem)] leading-snug tracking-tight lowercase">
-              turning ideas into functional digital experiences.
+            <h3 className="font-sans font-normal text-[clamp(1.35rem,3.5vw,1.85rem)] leading-snug tracking-tight">
+              Turning ideas into functional digital experiences.
             </h3>
 
             <div className="mt-5 space-y-3 text-muted-foreground">

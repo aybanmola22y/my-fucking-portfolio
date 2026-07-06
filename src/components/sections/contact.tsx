@@ -70,7 +70,7 @@ export function ContactSection() {
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           number="IV"
-          title="contact"
+          title="Contact"
           description="Have a project, a question, or just want to say hi? My inbox is always open."
         />
 
@@ -83,8 +83,8 @@ export function ContactSection() {
             viewport={{ once: true }}
             className="lg:col-span-2"
           >
-            <h3 className="font-sans font-normal text-[clamp(1.35rem,3vw,1.75rem)] leading-snug tracking-tight lowercase">
-              let&apos;s build something great together.
+            <h3 className="font-sans font-normal text-[clamp(1.35rem,3vw,1.75rem)] leading-snug tracking-tight">
+              Let&apos;s build something great together.
             </h3>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Whether it&apos;s a website, a custom system, or a quick question — drop a message
@@ -167,8 +167,8 @@ export function ContactSection() {
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 Send a message
               </p>
-              <h4 className="mt-2 font-sans font-normal text-xl tracking-tight lowercase">
-                tell me about your project.
+              <h4 className="mt-2 font-sans font-normal text-xl tracking-tight">
+                Tell me about your project.
               </h4>
             </div>
 
@@ -182,7 +182,7 @@ export function ContactSection() {
                 <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-primary/20 bg-primary/10">
                   <CheckCircle2 className="h-7 w-7 text-primary" strokeWidth={1.6} />
                 </div>
-                <p className="font-sans font-normal text-xl lowercase">message received!</p>
+                <p className="font-sans font-normal text-xl">Message received!</p>
                 <p className="mt-2 max-w-xs text-sm text-muted-foreground">
                   Thanks for reaching out. I&apos;ll review your message and get back to you soon.
                 </p>

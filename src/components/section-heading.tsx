@@ -32,7 +32,7 @@ export function SectionHeading({
         className
       )}
     >
-      <h2 className="font-sans font-normal text-[clamp(1.75rem,4vw,2.5rem)] leading-tight tracking-tight text-foreground lowercase">
+      <h2 className="font-sans font-normal text-[clamp(1.75rem,4vw,2.5rem)] leading-tight tracking-tight text-foreground">
         <span className="normal-case text-muted-foreground">{number}</span>
         {" — "}
         {title}

@@ -68,7 +68,7 @@ function ServiceCard({
                 className="h-4 w-4 shrink-0 text-primary transition-transform duration-300 group-hover:scale-110"
                 strokeWidth={1.6}
               />
-              <h4 className="font-sans text-[1.05rem] font-normal leading-snug tracking-tight lowercase md:text-lg">
+              <h4 className="font-sans text-[1.05rem] font-normal leading-snug tracking-tight md:text-lg">
                 {service.title}
               </h4>
             </div>
@@ -94,8 +94,8 @@ export function ServicesSection() {
           viewport={{ once: true }}
         >
           <div className="mb-10 max-w-2xl">
-            <h3 className="mb-3 font-sans text-xl font-normal tracking-tight lowercase md:text-2xl">
-              services i offer
+            <h3 className="mb-3 font-sans text-xl font-normal tracking-tight md:text-2xl">
+              Services I Offer
             </h3>
             <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
               From front-end builds and business websites to blogs and internal systems — I deliver
