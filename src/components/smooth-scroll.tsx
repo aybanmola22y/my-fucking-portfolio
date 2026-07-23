@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Lenis from "lenis"
+import "lenis/dist/lenis.css"
 
 type ScrollTarget = string | number | HTMLElement
 
@@ -19,6 +20,8 @@ export function useSmoothScroll() {
   return React.useContext(SmoothScrollContext)
 }
 
+const smoothEase = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = React.useRef<Lenis | null>(null)
 
@@ -28,25 +31,21 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     ).matches
     if (prefersReducedMotion) return
 
+    // Responsive smoothness: higher lerp = less "lag behind" the wheel.
+    // syncTouch off — it makes trackpads feel delayed.
     const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.1,
       smoothWheel: true,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 0.95,
+      touchMultiplier: 1.2,
+      syncTouch: false,
+      autoRaf: true,
+      anchors: false,
+      stopInertiaOnNavigate: true,
     })
     lenisRef.current = lenis
 
-    let rafId = 0
-    const raf = (time: number) => {
-      if (!document.hidden) {
-        lenis.raf(time)
-      }
-      rafId = requestAnimationFrame(raf)
-    }
-    rafId = requestAnimationFrame(raf)
-
     return () => {
-      cancelAnimationFrame(rafId)
       lenis.destroy()
       lenisRef.current = null
     }
@@ -56,7 +55,11 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     (target, options) => {
       const lenis = lenisRef.current
       if (lenis) {
-        lenis.scrollTo(target, { offset: options?.offset ?? 0 })
+        lenis.scrollTo(target, {
+          offset: options?.offset ?? 0,
+          duration: 1.2,
+          easing: smoothEase,
+        })
         return
       }
       if (typeof target === "string") {
@@ -91,7 +94,6 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
         if (overflow <= 0) {
           offset = -(viewportHeight - sectionHeight - padding)
         } else if (overflow <= viewportHeight * 0.18) {
-          // Slight overflow: center the section so top and bottom stay visible
           offset = -((viewportHeight - sectionHeight) / 2)
         } else {
           offset = sectionHeight - viewportHeight + padding
@@ -100,7 +102,11 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
       const lenis = lenisRef.current
       if (lenis) {
-        lenis.scrollTo(el, { offset })
+        lenis.scrollTo(el, {
+          offset,
+          duration: 1.2,
+          easing: smoothEase,
+        })
         return
       }
 

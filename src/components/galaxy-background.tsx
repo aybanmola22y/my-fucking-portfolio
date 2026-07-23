@@ -35,9 +35,9 @@ export function GalaxyBackground() {
     if (!ctx) return
 
     const { isMobile } = getQuality()
-    const starCount = isMobile ? 70 : 130
-    const dustCount = isMobile ? 180 : 380
-    const targetFps = isMobile ? 24 : 30
+    const starCount = isMobile ? 50 : 90
+    const dustCount = isMobile ? 100 : 220
+    const targetFps = isMobile ? 20 : 24
     const frameInterval = 1000 / targetFps
 
     const clusters = [
@@ -78,6 +78,8 @@ export function GalaxyBackground() {
     let lastFrame = 0
     let logicalWidth = 0
     let logicalHeight = 0
+    let scrolling = false
+    let scrollIdleTimer = 0
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.25)
@@ -90,16 +92,27 @@ export function GalaxyBackground() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 
+    const markScrolling = () => {
+      scrolling = true
+      window.clearTimeout(scrollIdleTimer)
+      scrollIdleTimer = window.setTimeout(() => {
+        scrolling = false
+      }, 140)
+    }
+
     resize()
     window.addEventListener("resize", resize)
+    window.addEventListener("scroll", markScrolling, { passive: true })
+    window.addEventListener("wheel", markScrolling, { passive: true })
+    window.addEventListener("touchmove", markScrolling, { passive: true })
 
     const draw = (time: number) => {
       raf = requestAnimationFrame(draw)
 
+      // Skip frames while the user is scrolling — keeps Lenis buttery
+      if (scrolling || document.hidden) return
       if (time - lastFrame < frameInterval) return
       lastFrame = time
-
-      if (document.hidden) return
 
       ctx.clearRect(0, 0, logicalWidth, logicalHeight)
 
@@ -137,7 +150,11 @@ export function GalaxyBackground() {
 
     return () => {
       cancelAnimationFrame(raf)
+      window.clearTimeout(scrollIdleTimer)
       window.removeEventListener("resize", resize)
+      window.removeEventListener("scroll", markScrolling)
+      window.removeEventListener("wheel", markScrolling)
+      window.removeEventListener("touchmove", markScrolling)
     }
   }, [showEffects])
 
