@@ -113,6 +113,9 @@ const workPrinciples: {
     detail:
       "Visuals that feel refined without noise — balanced type, calm color, and spacing that lets the product breathe.",
     icon: SwatchIcon,
+  },
+  {
+    label: "Client Focused",
     short: "Outcomes",
     keyword: "Impact",
     detail:
