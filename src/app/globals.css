@@ -68,6 +68,57 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Smooth theme switch — lightweight (no universal * transitions) */
+html.theme-animating {
+  transition: background-color 0.22s ease, color 0.22s ease;
+}
+
+html.theme-animating body {
+  transition: background-color 0.22s ease, color 0.22s ease;
+}
+
+/* Opacity crossfade — GPU-friendly vs clip-path circle */
+@supports (view-transition-name: root) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.28s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-fill-mode: both;
+  }
+
+  ::view-transition-old(root) {
+    animation-name: theme-fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: theme-fade-in;
+  }
+}
+
+@keyframes theme-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes theme-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-animating,
+  html.theme-animating body {
+    transition: none !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
 html.lenis,
 html.lenis body {
   height: auto;

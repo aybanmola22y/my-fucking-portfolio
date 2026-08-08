@@ -1,22 +1,23 @@
 "use client"
 
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion"
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import type { ComponentType, SVGProps } from "react"
 import {
   MapPinIcon,
-  AcademicCapIcon,
-  BuildingLibraryIcon,
-  CakeIcon,
   PaintBrushIcon,
   ServerStackIcon,
   CubeIcon,
   CodeBracketIcon,
   BoltIcon,
-  PuzzlePieceIcon,
   ViewfinderCircleIcon,
-  ArrowUpRightIcon,
+  SwatchIcon,
 } from "@heroicons/react/24/outline"
 import { cn } from "@/lib/utils"
 import { SectionHeading } from "@/components/section-heading"
@@ -25,9 +26,6 @@ type HeroIcon = ComponentType<SVGProps<SVGSVGElement>>
 
 const profileMeta = {
   location: "Puerto Princesa, PH",
-  course: "Information Technology",
-  school: "Palawan State University",
-  age: 23,
 }
 
 const stats: {
@@ -40,7 +38,7 @@ const stats: {
   { value: 5, suffix: "+", label: "Projects Built", hint: "Shipped & live", fill: 55 },
   { value: 12, suffix: "+", label: "Technologies", hint: "In active use", fill: 78 },
   { value: 1, suffix: "+", label: "Years Coding", hint: "And climbing", fill: 32 },
-  { value: 100, suffix: "%", label: "Dedication", hint: "On every brief", fill: 100 },
+  { value: 24, suffix: "h", label: "Response Time", hint: "Typical reply window", fill: 85 },
 ]
 
 const strengths: {
@@ -109,15 +107,12 @@ const workPrinciples: {
     icon: BoltIcon,
   },
   {
-    label: "Problem Solver",
-    short: "Systems",
-    keyword: "Logic",
+    label: "Clean Aesthetics",
+    short: "UI Taste",
+    keyword: "Polish",
     detail:
-      "Break down messy requirements into focused flows and interfaces people can actually use.",
-    icon: PuzzlePieceIcon,
-  },
-  {
-    label: "Client Focused",
+      "Visuals that feel refined without noise — balanced type, calm color, and spacing that lets the product breathe.",
+    icon: SwatchIcon,
     short: "Outcomes",
     keyword: "Impact",
     detail:
@@ -156,204 +151,231 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
   )
 }
 
-/** What I Bring — stage + rail (major layout) */
+/** What I Bring — principle theater (big numeral + morph) */
 function PrinciplesStage() {
   const [active, setActive] = useState(0)
   const prefersReducedMotion = useReducedMotion()
   const current = workPrinciples[active]
   const Icon = current.icon
 
-  return (
-    <div className="mt-4 overflow-hidden rounded-2xl border border-primary/15 bg-background/40">
-      {/* Stage */}
-      <div className="relative min-h-[13.5rem] overflow-hidden border-b border-primary/10 p-5 md:min-h-[14.5rem] md:p-6">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-8 -top-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,hsl(var(--foreground)/0.04)_1px,transparent_0)] bg-[size:16px_16px]"
-        />
+  const go = (dir: -1 | 1) => {
+    setActive((i) => (i + dir + workPrinciples.length) % workPrinciples.length)
+  }
 
-        <div className="relative flex h-full flex-col justify-between gap-6">
-          <div className="flex items-start justify-between gap-3">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary/70">
-              Principle {String(active + 1).padStart(2, "0")}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+  return (
+    <div className="mt-4 overflow-hidden rounded-2xl border border-border/70 bg-background/50">
+      <div className="relative min-h-[15.5rem] p-5 md:min-h-[16.5rem] md:p-6">
+        {/* Keyword stacked above the watermark — top-right only */}
+        <div className="pointer-events-none absolute right-3 top-2 z-0 flex w-[7.5rem] flex-col items-end md:right-5 md:top-3 md:w-[9rem]">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={`kw-${active}`}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={prefersReducedMotion ? undefined : { opacity: 0 }}
+              transition={{ duration: 0.25, ease }}
+              className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground"
+            >
               {current.keyword}
+            </motion.span>
+          </AnimatePresence>
+          <motion.span
+            key={`wm-${active}`}
+            initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, ease }}
+            aria-hidden
+            className="mt-0.5 select-none font-sans text-[4.75rem] font-normal leading-none tracking-tighter text-primary/[0.07] md:text-[6rem]"
+          >
+            {String(active + 1).padStart(2, "0")}
+          </motion.span>
+        </div>
+
+        <div className="relative z-10 flex h-full min-h-[13rem] flex-col">
+          <div className="flex items-center justify-between gap-3">
+            <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+              <Icon className="h-3.5 w-3.5" aria-hidden />
+              {current.short}
             </span>
           </div>
 
           <AnimatePresence mode="wait">
             <motion.div
               key={current.label}
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={prefersReducedMotion ? undefined : { opacity: 0, y: -10 }}
+              exit={prefersReducedMotion ? undefined : { opacity: 0, y: -12 }}
               transition={{ duration: 0.32, ease }}
-              className="flex items-end gap-4"
+              className="mt-6 max-w-[min(100%,18rem)] pr-2 md:max-w-[16.5rem]"
             >
-              <Icon className="mb-1 h-7 w-7 shrink-0 text-primary" aria-hidden />
-              <div className="min-w-0 flex-1">
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-                  {current.short}
-                </p>
-                <h4 className="mt-1 font-sans text-xl font-normal leading-tight tracking-tight md:text-2xl">
-                  {current.label}
-                </h4>
-                <p className="mt-2 max-w-sm text-xs leading-relaxed text-muted-foreground md:text-sm">
-                  {current.detail}
-                </p>
-              </div>
+              <h4 className="font-sans text-[1.55rem] font-normal leading-[1.15] tracking-tight md:text-[1.85rem]">
+                {current.label}
+              </h4>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {current.detail}
+              </p>
             </motion.div>
           </AnimatePresence>
-        </div>
-      </div>
 
-      {/* Rail */}
-      <div
-        role="tablist"
-        aria-label="Principles"
-        className="grid grid-cols-2 sm:grid-cols-4"
-      >
-        {workPrinciples.map((item, index) => {
-          const isActive = active === index
-          const RailIcon = item.icon
-          return (
-            <button
-              key={item.label}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              onMouseEnter={() => setActive(index)}
-              onFocus={() => setActive(index)}
-              onClick={() => setActive(index)}
-              className={cn(
-                "relative flex flex-col items-start gap-2 border-primary/10 p-3 text-left transition-colors md:p-3.5",
-                index % 2 === 0 && "border-r sm:border-r",
-                index < 2 && "border-b sm:border-b-0",
-                index < 3 && "sm:border-r",
-                isActive ? "bg-primary/[0.07]" : "hover:bg-primary/[0.03]"
-              )}
-            >
-              {isActive && (
-                <motion.span
-                  layoutId={prefersReducedMotion ? undefined : "principle-rail"}
-                  className="absolute inset-x-0 top-0 h-0.5 bg-primary"
-                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+          <div className="mt-auto flex items-center justify-between gap-3 pt-8">
+            <div className="flex gap-1.5">
+              {workPrinciples.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  aria-label={`Principle ${i + 1}`}
+                  onClick={() => setActive(i)}
+                  className={cn(
+                    "h-1 rounded-full transition-all duration-300",
+                    i === active
+                      ? "w-7 bg-primary"
+                      : "w-3 bg-border hover:bg-muted-foreground/40"
+                  )}
                 />
-              )}
-              <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">
-                <RailIcon className="h-3.5 w-3.5 text-primary/70" aria-hidden />
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span
-                className={cn(
-                  "font-sans text-xs leading-snug tracking-tight md:text-sm",
-                  isActive ? "text-foreground" : "text-foreground/55"
-                )}
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => go(-1)}
+                aria-label="Previous principle"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
               >
-                {item.short}
-              </span>
-            </button>
-          )
-        })}
+                <span className="sr-only">Prev</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+                  <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={() => go(1)}
+                aria-label="Next principle"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+              >
+                <span className="sr-only">Next</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+                  <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
-/** At a Glance — kinetic metric board */
+/** At a Glance — one hero metric, selectable from a side stack */
 function MetricBoard() {
   const [active, setActive] = useState(0)
   const prefersReducedMotion = useReducedMotion()
-  const boardRef = useRef<HTMLDivElement>(null)
-  const inView = useInView(boardRef, { once: true, margin: "-40px" })
+  const current = stats[active]
 
   return (
-    <div
-      ref={boardRef}
-      className="mt-4 overflow-hidden rounded-2xl border border-primary/15 bg-background/30"
-    >
-      <div className="grid grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat, index) => {
-          const isActive = active === index
-          return (
-            <button
-              key={stat.label}
-              type="button"
-              onMouseEnter={() => setActive(index)}
-              onFocus={() => setActive(index)}
-              onClick={() => setActive(index)}
-              className={cn(
-                "group relative flex flex-col items-start gap-3 border-primary/10 p-4 text-left transition-colors md:p-5",
-                index % 2 === 0 && "border-r",
-                index < 2 && "border-b lg:border-b-0",
-                index === 2 && "border-r lg:border-r",
-                index < 3 && "lg:border-r",
-                isActive ? "bg-primary/[0.06]" : "hover:bg-primary/[0.03]"
-              )}
-            >
-              <div className="flex w-full items-center justify-between gap-2">
-                <span className="font-mono text-[10px] text-primary/45">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus:opacity-100">
-                  {stat.hint}
-                </span>
-              </div>
+    <div className="mt-4 overflow-hidden rounded-2xl border border-border/70 bg-background/40">
+      <div className="grid md:grid-cols-[1.2fr_0.9fr]">
+        {/* Hero number */}
+        <div className="relative flex min-h-[12rem] flex-col justify-between border-b border-border/70 p-6 md:min-h-[14rem] md:border-b-0 md:border-r md:p-8">
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+              Metric {String(active + 1).padStart(2, "0")}
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+              {current.hint}
+            </span>
+          </div>
 
-              <p
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.label}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={prefersReducedMotion ? undefined : { opacity: 0, y: -14 }}
+              transition={{ duration: 0.35, ease }}
+              className="py-4"
+            >
+              <p className="font-sans text-[clamp(3.5rem,10vw,5.5rem)] font-normal leading-none tracking-tight text-primary">
+                <Counter key={current.label} to={current.value} suffix={current.suffix} />
+              </p>
+              <p className="mt-3 font-mono text-xs uppercase tracking-[0.18em] text-foreground">
+                {current.label}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Fill bar for the active metric */}
+          <div className="h-1 w-full overflow-hidden rounded-full bg-primary/10">
+            <motion.div
+              key={`fill-${active}`}
+              className="h-full rounded-full bg-primary"
+              initial={{ width: 0 }}
+              animate={{ width: `${current.fill}%` }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease }}
+            />
+          </div>
+        </div>
+
+        {/* Selectors */}
+        <div className="flex flex-col" role="tablist" aria-label="Metrics">
+          {stats.map((stat, index) => {
+            const isActive = active === index
+            return (
+              <button
+                key={stat.label}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onMouseEnter={() => setActive(index)}
+                onFocus={() => setActive(index)}
+                onClick={() => setActive(index)}
                 className={cn(
-                  "font-sans text-4xl font-normal tabular-nums tracking-tight transition-colors md:text-5xl",
-                  isActive ? "text-primary" : "text-primary/70"
+                  "relative flex flex-1 items-center justify-between gap-3 border-border/60 px-5 py-4 text-left transition-colors",
+                  index < stats.length - 1 && "border-b",
+                  isActive ? "bg-primary/[0.06]" : "hover:bg-muted/40"
                 )}
               >
-                <Counter to={stat.value} suffix={stat.suffix} />
-              </p>
-
-              <div className="w-full">
-                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
-                  {stat.label}
-                </p>
-                <div className="mt-2.5 h-1 w-full overflow-hidden rounded-full bg-primary/10">
-                  <motion.div
-                    className="h-full rounded-full bg-primary"
-                    initial={{ width: 0 }}
-                    animate={{
-                      width: inView ? `${stat.fill}%` : 0,
-                      opacity: isActive ? 1 : 0.45,
-                    }}
-                    transition={{
-                      width: {
-                        duration: prefersReducedMotion ? 0 : 1.1,
-                        delay: prefersReducedMotion ? 0 : index * 0.1,
-                        ease,
-                      },
-                      opacity: { duration: 0.25 },
-                    }}
+                {isActive && (
+                  <motion.span
+                    layoutId={prefersReducedMotion ? undefined : "metric-side"}
+                    className="absolute inset-y-0 left-0 w-0.5 bg-primary"
+                    transition={{ type: "spring", stiffness: 400, damping: 34 }}
                   />
+                )}
+                <div>
+                  <p
+                    className={cn(
+                      "font-sans text-lg tabular-nums tracking-tight transition-colors",
+                      isActive ? "text-primary" : "text-foreground/70"
+                    )}
+                  >
+                    {stat.value}
+                    {stat.suffix}
+                  </p>
+                  <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+                    {stat.label}
+                  </p>
                 </div>
-              </div>
-            </button>
-          )
-        })}
+                <span className="font-mono text-[10px] text-muted-foreground/50">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </button>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
 }
 
-/** Core Strengths — expanding horizontal / stacked panels */
+/** Core Strengths — bento mosaic (active cell grows) */
 function StrengthsExpand() {
   const [active, setActive] = useState(0)
   const prefersReducedMotion = useReducedMotion()
 
   return (
     <div className="mt-4">
-      {/* Desktop: expanding row */}
-      <div className="hidden h-[17rem] gap-2 md:flex">
+      {/* Desktop bento — active fills left stage, others stack right */}
+      <div className="hidden h-[26rem] grid-cols-3 grid-rows-3 gap-2 md:grid">
         {strengths.map((item, index) => {
           const Icon = item.icon
           const isActive = active === index
@@ -365,52 +387,48 @@ function StrengthsExpand() {
               onMouseEnter={() => setActive(index)}
               onFocus={() => setActive(index)}
               onClick={() => setActive(index)}
-              animate={{
-                flexGrow: isActive ? 2.4 : 0.7,
-              }}
               transition={{ type: "spring", stiffness: 280, damping: 28 }}
               className={cn(
-                "relative flex h-full min-w-0 basis-0 flex-col overflow-hidden rounded-2xl border text-left",
+                "relative overflow-hidden rounded-2xl border text-left",
                 isActive
-                  ? "border-primary/35 bg-card/80"
-                  : "border-primary/10 bg-background/40"
+                  ? "col-span-2 row-span-3 border-primary/30 bg-primary/[0.04]"
+                  : "col-span-1 row-span-1 border-border/70 bg-background/40 hover:border-primary/20"
               )}
             >
               <div
                 aria-hidden
                 className={cn(
-                  "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-80",
+                  "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-70",
                   item.motif
                 )}
               />
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.35)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.35)_1px,transparent_1px)] bg-[size:1.25rem_1.25rem] opacity-30"
-              />
-
               <div className="relative flex h-full flex-col p-4 md:p-5">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono text-[10px] text-primary/55">
+                  <span
+                    className={cn(
+                      "font-mono text-[10px] tabular-nums",
+                      isActive ? "text-primary" : "text-muted-foreground"
+                    )}
+                  >
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                    {item.short}
-                  </span>
-                </div>
-
-                <div className="mt-auto">
                   <Icon
                     className={cn(
-                      "mb-3 text-primary",
-                      isActive ? "h-6 w-6" : "h-4 w-4"
+                      "text-primary transition-all duration-300",
+                      isActive ? "h-6 w-6" : "h-4 w-4 opacity-70"
                     )}
                     aria-hidden
                   />
+                </div>
 
+                <div className="mt-auto">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    {item.short}
+                  </p>
                   <p
                     className={cn(
-                      "font-sans font-normal tracking-tight",
-                      isActive ? "text-xl" : "text-sm"
+                      "mt-1 font-sans font-normal tracking-tight",
+                      isActive ? "text-2xl" : "text-sm"
                     )}
                   >
                     {item.title}
@@ -420,31 +438,28 @@ function StrengthsExpand() {
                     {isActive && (
                       <motion.div
                         key="body"
-                        initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+                        initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={prefersReducedMotion ? undefined : { opacity: 0, y: 6 }}
-                        transition={{ duration: 0.25, ease }}
-                        className="mt-2"
+                        exit={prefersReducedMotion ? undefined : { opacity: 0 }}
+                        transition={{ duration: 0.28, ease }}
+                        className="mt-3"
                       >
-                        <p className="text-xs leading-relaxed text-muted-foreground md:text-sm">
+                        <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
                           {item.desc}
                         </p>
-                        <p className="mt-3 font-mono text-[10px] text-primary/80">
-                          {item.tags.join(" · ")}
-                        </p>
-                        <span className="mt-4 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                          Focus area
-                          <ArrowUpRightIcon className="h-3 w-3" aria-hidden />
-                        </span>
+                        <div className="mt-4 flex flex-wrap gap-1.5">
+                          {item.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded-full border border-primary/20 bg-background/60 px-2.5 py-1 font-mono text-[10px] text-primary"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
-
-                  {!isActive && (
-                    <p className="mt-1 line-clamp-2 text-[10px] leading-snug text-muted-foreground/80">
-                      {item.tags[0]}
-                    </p>
-                  )}
                 </div>
               </div>
             </motion.button>
@@ -452,7 +467,7 @@ function StrengthsExpand() {
         })}
       </div>
 
-      {/* Mobile: stacked stage cards */}
+      {/* Mobile — stacked promote */}
       <div className="space-y-2 md:hidden">
         {strengths.map((item, index) => {
           const Icon = item.icon
@@ -466,16 +481,9 @@ function StrengthsExpand() {
                 "relative w-full overflow-hidden rounded-2xl border p-4 text-left transition-colors",
                 isActive
                   ? "border-primary/30 bg-primary/[0.05]"
-                  : "border-primary/10 bg-background/40"
+                  : "border-border/70 bg-background/40"
               )}
             >
-              <div
-                aria-hidden
-                className={cn(
-                  "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-70",
-                  item.motif
-                )}
-              />
               <div className="relative flex items-start gap-3">
                 <Icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
                 <div className="min-w-0 flex-1">
@@ -486,7 +494,7 @@ function StrengthsExpand() {
                     </span>
                   </div>
                   <AnimatePresence initial={false}>
-                    {isActive ? (
+                    {isActive && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -501,8 +509,6 @@ function StrengthsExpand() {
                           {item.tags.join(" · ")}
                         </p>
                       </motion.div>
-                    ) : (
-                      <p className="mt-1 text-xs text-muted-foreground">{item.short} · tap to expand</p>
                     )}
                   </AnimatePresence>
                 </div>
@@ -523,9 +529,9 @@ export function AboutSection() {
       <div className="pointer-events-none absolute -right-24 bottom-10 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl">
-        <SectionHeading number="I" title="About Me" className="mb-8 md:mb-9" />
+        <SectionHeading number="I" title="About Me" className="mb-6 md:mb-8" />
 
-        <div className="grid items-start gap-6 lg:grid-cols-12 lg:gap-8">
+        <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
           {/* Profile */}
           <motion.div
             initial={{ opacity: 0, x: -28 }}
@@ -538,65 +544,52 @@ export function AboutSection() {
               Profile
             </p>
 
-            <div className="mt-4 flex flex-col items-center text-center lg:items-start lg:text-left">
-              <div className="relative h-28 w-28 shrink-0 lg:h-[7.5rem] lg:w-[7.5rem]">
+            {/* Compact horizontal identity */}
+            <div className="mt-4 flex items-start gap-4 sm:gap-5">
+              <div className="relative h-[4.75rem] w-[4.75rem] shrink-0 sm:h-[5.25rem] sm:w-[5.25rem]">
                 <div
                   aria-hidden
                   className="absolute inset-0 rounded-full border border-dashed border-primary/25"
                 />
-                <div className="absolute inset-[5px] overflow-hidden rounded-full">
+                <div className="absolute inset-[4px] overflow-hidden rounded-full">
                   <Image
                     src="/profile.png"
                     alt="John Aivanne Molato"
                     fill
                     className="object-cover object-center"
-                    sizes="256px"
+                    sizes="128px"
                     quality={95}
                     priority
                   />
                 </div>
-                <span className="absolute bottom-1 right-1 z-10 flex h-5 w-5 items-center justify-center rounded-full border-2 border-background bg-emerald-500">
+                <span className="absolute bottom-0.5 right-0.5 z-10 flex h-4 w-4 items-center justify-center rounded-full border-2 border-background bg-emerald-500">
                   <span className="h-1.5 w-1.5 rounded-full bg-white" />
                 </span>
               </div>
 
-              <h3 className="mt-4 font-sans text-lg font-normal tracking-tight md:text-xl">
-                John Aivanne Molato
-              </h3>
-              <p className="mt-1 font-mono text-sm text-muted-foreground">Full-stack Web Developer</p>
+              <div className="min-w-0 flex-1 pt-0.5">
+                <h3 className="font-sans text-lg font-normal tracking-tight md:text-xl">
+                  John Aivanne Molato
+                </h3>
+                <p className="mt-0.5 font-mono text-sm text-muted-foreground">
+                  Full-stack Web Developer
+                </p>
 
-              <div className="mt-4 space-y-2 font-mono text-xs text-muted-foreground">
-                <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 lg:justify-start">
+                <div className="mt-3 font-mono text-[11px] text-muted-foreground">
                   <span className="inline-flex items-center gap-1.5">
-                    <MapPinIcon className="h-3.5 w-3.5 text-primary" aria-hidden />
+                    <MapPinIcon className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
                     {profileMeta.location}
-                  </span>
-                  <span className="hidden text-primary/30 sm:inline">·</span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <AcademicCapIcon className="h-3.5 w-3.5 text-primary" aria-hidden />
-                    {profileMeta.course}
-                  </span>
-                </div>
-                <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 lg:justify-start">
-                  <span className="inline-flex items-center gap-1.5">
-                    <BuildingLibraryIcon className="h-3.5 w-3.5 text-primary" aria-hidden />
-                    {profileMeta.school}
-                  </span>
-                  <span className="hidden text-primary/30 sm:inline">·</span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <CakeIcon className="h-3.5 w-3.5 text-primary" aria-hidden />
-                    {profileMeta.age} years old
                   </span>
                 </div>
               </div>
             </div>
 
-            <div id="about-what-i-bring" className="mt-6 border-t border-primary/10 pt-5">
+            <div id="about-what-i-bring" className="mt-7 border-t border-primary/10 pt-6">
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 What I Bring
               </p>
               <p className="mt-1.5 max-w-xs text-xs leading-relaxed text-muted-foreground">
-                An interactive principle board — switch the stage to see how I work.
+                How I work — flip through the principles.
               </p>
               <PrinciplesStage />
             </div>
@@ -610,30 +603,30 @@ export function AboutSection() {
             viewport={{ once: true }}
             className="lg:col-span-7"
           >
-            <h3 className="font-sans text-[clamp(1.35rem,3.5vw,1.85rem)] font-normal leading-snug tracking-tight">
+            <h3 className="font-sans text-[clamp(1.4rem,3.2vw,1.9rem)] font-normal leading-snug tracking-tight">
               Turning ideas into functional digital experiences.
             </h3>
 
-            <div className="mt-5 space-y-3 text-muted-foreground">
-              <p className="leading-relaxed">
+            <div className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground md:text-[15px]">
+              <p>
                 I&apos;m a passionate Full-stack Web Developer from the Philippines who specializes
                 in building modern, responsive, and user-friendly web applications — from polished
                 business websites to full custom systems.
               </p>
-              <p className="leading-relaxed">
+              <p>
                 I love turning complex problems into simple, intuitive designs that look great and
                 deliver an exceptional experience. When I&apos;m not coding, I&apos;m exploring new
                 technologies and sharpening my craft.
               </p>
             </div>
 
-            <div className="mt-7">
+            <div className="mt-8">
               <div className="flex items-end justify-between gap-3">
                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                   At a glance
                 </p>
                 <p className="hidden font-mono text-[10px] text-muted-foreground/70 sm:block">
-                  Hover a metric to focus
+                  Select a metric to spotlight
                 </p>
               </div>
               <MetricBoard />
@@ -645,7 +638,7 @@ export function AboutSection() {
                   Core strengths
                 </p>
                 <p className="hidden font-mono text-[10px] text-muted-foreground/70 sm:block">
-                  Expand a panel
+                  Hover a tile to promote it
                 </p>
               </div>
               <StrengthsExpand />

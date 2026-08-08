@@ -7,7 +7,6 @@ import {
   BuildingStorefrontIcon,
   DocumentTextIcon,
   CubeTransparentIcon,
-  ArrowUpRightIcon,
 } from "@heroicons/react/24/outline"
 import type { ComponentType, SVGProps } from "react"
 import { cn } from "@/lib/utils"
@@ -69,170 +68,237 @@ export function ServicesSection() {
   const Icon = current.icon
 
   return (
-    <section id="services" className="px-4 py-20 md:px-8">
+    <section id="services" className="px-4 py-20 md:px-8 md:py-28">
       <div className="mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease }}
           viewport={{ once: true }}
         >
-          <div className="flex flex-col gap-3 border-b border-border pb-8 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-                Services
-              </p>
-              <h3 className="mt-2 font-sans text-2xl font-normal tracking-tight md:text-3xl">
-                What I can build for you
-              </h3>
-            </div>
-            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Hover or tap a service to explore scope, outcome, and focus areas.
+          {/* Header */}
+          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-muted-foreground">
+            03 — Services
+          </p>
+
+          <div className="mt-5 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <h3 className="max-w-xl font-sans text-[clamp(2rem,5vw,3.25rem)] font-normal leading-[1.05] tracking-tight">
+              What I can build{" "}
+              <span className="text-primary">for you.</span>
+            </h3>
+            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground lg:pb-1 lg:text-right">
+              Four offerings. One focused delivery style. Select a line to read
+              the brief.
             </p>
           </div>
 
-          {/* Desktop — expanding panels */}
-          <div className="mt-8 hidden h-[22rem] gap-2 md:flex">
+          {/* Index */}
+          <nav aria-label="Service list" className="mt-10">
             {services.map((service, index) => {
-              const ItemIcon = service.icon
               const isActive = active === index
-
               return (
-                <motion.button
-                  key={service.title}
-                  type="button"
-                  layout
-                  onMouseEnter={() => setActive(index)}
-                  onFocus={() => setActive(index)}
-                  onClick={() => setActive(index)}
-                  animate={{ flexGrow: isActive ? 2.6 : 0.65 }}
-                  transition={{ type: "spring", stiffness: 280, damping: 30 }}
-                  className={cn(
-                    "relative flex h-full min-w-0 basis-0 flex-col overflow-hidden rounded-2xl border text-left transition-colors",
-                    isActive
-                      ? "border-primary/30 bg-primary/[0.04]"
-                      : "border-border bg-background/40 hover:border-primary/20"
-                  )}
-                >
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--primary)/0.08),transparent_55%)] opacity-0 transition-opacity duration-300"
-                    style={{ opacity: isActive ? 1 : 0 }}
-                  />
-
-                  <div className="relative flex h-full flex-col p-5">
-                    <div className="flex items-center justify-between gap-2">
-                      <span
-                        className={cn(
-                          "font-mono text-[11px] tabular-nums",
-                          isActive ? "text-primary" : "text-muted-foreground"
-                        )}
-                      >
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <ItemIcon
-                        className={cn(
-                          "transition-all duration-300",
-                          isActive ? "h-5 w-5 text-primary" : "h-4 w-4 text-primary/50"
-                        )}
-                        aria-hidden
-                      />
-                    </div>
-
-                    <div className="mt-auto">
-                      <p
-                        className={cn(
-                          "font-mono text-[10px] uppercase tracking-[0.16em]",
-                          isActive ? "text-primary/80" : "text-muted-foreground"
-                        )}
-                      >
-                        {service.short}
-                      </p>
-                      <h4
-                        className={cn(
-                          "mt-2 font-sans font-normal tracking-tight",
-                          isActive ? "text-xl md:text-2xl" : "text-sm"
-                        )}
-                      >
-                        {service.title}
-                      </h4>
-
-                      <AnimatePresence initial={false}>
-                        {isActive && (
-                          <motion.div
-                            key="body"
-                            initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={prefersReducedMotion ? undefined : { opacity: 0, y: 6 }}
-                            transition={{ duration: 0.28, ease }}
-                            className="mt-4"
-                          >
-                            <p className="text-sm leading-relaxed text-muted-foreground">
-                              {service.description}
-                            </p>
-                            <p className="mt-4 text-sm text-foreground/85">{service.outcome}</p>
-                            <p className="mt-5 font-mono text-[11px] text-primary/80">
-                              {service.tags.join(" · ")}
-                            </p>
-                            <span className="mt-6 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                              Available to start
-                              <ArrowUpRightIcon className="h-3 w-3" aria-hidden />
-                            </span>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </div>
-                </motion.button>
-              )
-            })}
-          </div>
-
-          {/* Mobile — index + detail */}
-          <div className="mt-6 md:hidden">
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {services.map((service, index) => (
                 <button
                   key={service.title}
                   type="button"
+                  onMouseEnter={() => setActive(index)}
+                  onFocus={() => setActive(index)}
                   onClick={() => setActive(index)}
                   className={cn(
-                    "shrink-0 rounded-full border px-3 py-1.5 font-mono text-[11px] transition-colors",
-                    active === index
-                      ? "border-primary/40 bg-primary/10 text-primary"
-                      : "border-border text-muted-foreground"
+                    "group relative grid w-full grid-cols-[2.75rem_1fr] items-center gap-3 border-b border-foreground/10 py-5 text-left transition-colors duration-300 sm:grid-cols-[3.5rem_1fr_auto] sm:gap-6 md:py-6",
+                    isActive
+                      ? "bg-primary/[0.03]"
+                      : "hover:bg-foreground/[0.02]"
                   )}
                 >
-                  {String(index + 1).padStart(2, "0")} · {service.short}
-                </button>
-              ))}
-            </div>
+                  {isActive && (
+                    <motion.span
+                      layoutId={prefersReducedMotion ? undefined : "service-bar"}
+                      className="absolute inset-y-0 left-0 w-0.5 bg-primary"
+                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                    />
+                  )}
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current.title}
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
-                transition={{ duration: 0.3, ease }}
-                className="mt-5 rounded-2xl border border-border p-5"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="font-mono text-[11px] text-primary">
-                    {String(active + 1).padStart(2, "0")}
+                  <span
+                    className={cn(
+                      "pl-3 font-mono text-sm tabular-nums transition-colors duration-300 md:pl-4",
+                      isActive ? "text-primary" : "text-muted-foreground/45"
+                    )}
+                  >
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                  <Icon className="h-5 w-5 text-primary" aria-hidden />
-                </div>
-                <h4 className="mt-3 font-sans text-xl font-normal tracking-tight">{current.title}</h4>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {current.description}
-                </p>
-                <p className="mt-3 text-sm text-foreground/85">{current.outcome}</p>
-                <p className="mt-4 font-mono text-[11px] text-primary/80">
-                  {current.tags.join(" · ")}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+
+                  <span
+                    className={cn(
+                      "font-sans text-[1.05rem] tracking-tight transition-all duration-300 md:text-[1.35rem]",
+                      isActive
+                        ? "translate-x-1 text-foreground md:translate-x-1.5"
+                        : "text-muted-foreground group-hover:text-foreground/75"
+                    )}
+                  >
+                    {service.title}
+                  </span>
+
+                  <span
+                    className={cn(
+                      "hidden items-center gap-2 pr-4 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors duration-300 sm:inline-flex",
+                      isActive ? "text-primary/80" : "text-muted-foreground/50"
+                    )}
+                  >
+                    {service.short}
+                    <motion.span
+                      animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -4 }}
+                      transition={{ duration: 0.25 }}
+                      className="text-primary"
+                      aria-hidden
+                    >
+                      →
+                    </motion.span>
+                  </span>
+                </button>
+              )
+            })}
+          </nav>
+
+          {/* Detail dock */}
+          <div className="mt-8 overflow-hidden rounded-2xl border border-foreground/10 md:mt-10">
+            <div className="grid lg:grid-cols-12">
+              <AnimatePresence mode="wait">
+                <motion.aside
+                  key={`plane-${active}`}
+                  initial={prefersReducedMotion ? false : { opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={prefersReducedMotion ? undefined : { opacity: 0, x: 10 }}
+                  transition={{ duration: 0.4, ease }}
+                  className="relative flex min-h-[17rem] flex-col justify-between overflow-hidden bg-primary px-7 py-8 text-primary-foreground md:px-9 md:py-10 lg:col-span-5 lg:min-h-[24rem]"
+                >
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -right-8 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl"
+                  />
+
+                  <div className="relative flex items-start justify-between gap-4">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm">
+                      <Icon className="h-5 w-5" aria-hidden />
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-foreground/70">
+                      {current.short}
+                    </span>
+                  </div>
+
+                  <div className="relative mt-12">
+                    <p
+                      aria-hidden
+                      className="select-none font-sans text-[5.5rem] font-normal leading-none tracking-tighter text-primary-foreground/[0.18] md:text-[6.5rem]"
+                    >
+                      {String(active + 1).padStart(2, "0")}
+                    </p>
+                    <p className="mt-3 max-w-[20ch] text-[15px] leading-relaxed text-primary-foreground/90">
+                      {current.outcome}
+                    </p>
+                  </div>
+                </motion.aside>
+              </AnimatePresence>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`copy-${active}`}
+                  initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease }}
+                  className="flex flex-col justify-between bg-background px-7 py-8 md:px-10 md:py-10 lg:col-span-7"
+                >
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary">
+                        Scope
+                      </p>
+                      <span className="h-px flex-1 bg-foreground/10" />
+                    </div>
+
+                    <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-foreground/80 md:text-base md:leading-relaxed">
+                      {current.description}
+                    </p>
+
+                    <ul className="mt-8 space-y-0 border-t border-foreground/10">
+                      {current.tags.map((tag, i) => (
+                        <li
+                          key={tag}
+                          className="flex items-center justify-between gap-4 border-b border-foreground/10 py-3.5"
+                        >
+                          <span className="font-mono text-[10px] tabular-nums text-primary/60">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span className="flex-1 text-sm text-foreground/85">
+                            {tag}
+                          </span>
+                          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground/60">
+                            Focus
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-10 flex flex-col gap-5 border-t border-foreground/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                    <a
+                      href="#contact"
+                      className="group inline-flex w-fit items-center gap-3 text-sm font-medium"
+                    >
+                      <span className="relative after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-100 after:bg-foreground after:transition-transform after:duration-300 group-hover:after:scale-x-0">
+                        Start a project
+                      </span>
+                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.75"
+                          aria-hidden
+                        >
+                          <path
+                            d="M7 17L17 7M9 7h8v8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </a>
+
+                    <div className="flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.16em]">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setActive(
+                            (i) => (i - 1 + services.length) % services.length
+                          )
+                        }
+                        className="rounded-md px-2.5 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                      >
+                        Prev
+                      </button>
+                      <span className="px-2 tabular-nums text-foreground">
+                        {String(active + 1).padStart(2, "0")}
+                        <span className="text-muted-foreground">
+                          /{String(services.length).padStart(2, "0")}
+                        </span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setActive((i) => (i + 1) % services.length)
+                        }
+                        className="rounded-md px-2.5 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </motion.div>
       </div>

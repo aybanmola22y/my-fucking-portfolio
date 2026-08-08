@@ -109,8 +109,14 @@ export function GalaxyBackground() {
     const draw = (time: number) => {
       raf = requestAnimationFrame(draw)
 
-      // Skip frames while the user is scrolling — keeps Lenis buttery
-      if (scrolling || document.hidden) return
+      // Skip frames while scrolling or switching theme — keeps transitions smooth
+      if (
+        scrolling ||
+        document.hidden ||
+        document.documentElement.dataset.themeSwitching === "true"
+      ) {
+        return
+      }
       if (time - lastFrame < frameInterval) return
       lastFrame = time
 
