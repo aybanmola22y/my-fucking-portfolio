@@ -189,7 +189,7 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-5 flex min-h-[1.5rem] items-center justify-center gap-1 font-mono text-xs text-muted-foreground sm:text-sm"
+          className="mt-5 flex min-h-[1.5rem] items-center justify-center gap-2.5 font-mono text-xs text-muted-foreground sm:text-sm"
         >
           <span>Turning imagination into</span>
           <span className="relative inline-flex min-w-[15ch] justify-start text-left text-foreground">
