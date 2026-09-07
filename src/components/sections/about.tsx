@@ -18,11 +18,6 @@ import {
   BoltIcon,
   ViewfinderCircleIcon,
   SwatchIcon,
-  CheckIcon,
-  MagnifyingGlassIcon,
-  ChatBubbleLeftRightIcon,
-  HeartIcon,
-  SparklesIcon,
 } from "@heroicons/react/24/outline"
 import { cn } from "@/lib/utils"
 import { SectionHeading } from "@/components/section-heading"
@@ -164,279 +159,150 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
   )
 }
 
-/** Mini practice canvases — one visual language per principle */
-function PrincipleCanvas({ index }: { index: number }) {
+/** Decorative corner mark — unique per principle */
+function PrincipleMark({ index }: { index: number }) {
   if (index === 0) {
     return (
-      <div className="space-y-1.5">
-        <div className="flex items-center gap-2 rounded-md border border-border/80 bg-muted/30 px-2 py-1.5">
-          <MagnifyingGlassIcon className="h-3 w-3 text-muted-foreground" aria-hidden />
-          <span className="h-1 w-[55%] rounded-full bg-muted-foreground/20" />
-        </div>
-        <div className="space-y-1">
-          {[72, 52].map((w, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-2 rounded-md border border-border/50 bg-background px-2 py-1.5"
-            >
-              <span className="h-5 w-5 shrink-0 rounded bg-primary/15" />
-              <span
-                className="h-1 rounded-full bg-muted-foreground/25"
-                style={{ width: `${w}%` }}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-end">
-          <span className="rounded-md bg-primary px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider text-primary-foreground">
-            Continue
-          </span>
-        </div>
-      </div>
+      <svg viewBox="0 0 80 80" className="h-16 w-16 text-primary" aria-hidden>
+        <rect x="8" y="14" width="64" height="6" fill="currentColor" opacity="0.9" />
+        <rect x="8" y="28" width="46" height="4" fill="currentColor" opacity="0.45" />
+        <rect x="8" y="40" width="30" height="3" fill="currentColor" opacity="0.25" />
+        <rect x="8" y="54" width="18" height="18" fill="currentColor" opacity="0.15" />
+        <rect x="32" y="54" width="18" height="18" fill="currentColor" opacity="0.08" />
+      </svg>
     )
   }
-
   if (index === 1) {
-    const steps = ["Brief locked", "First draft shared", "Feedback in"]
     return (
-      <div className="space-y-2">
-        <ul className="space-y-1">
-          {steps.map((step, i) => (
-            <li
-              key={step}
-              className="flex items-center gap-2 rounded-md border border-border/60 bg-background px-2 py-1.5"
-            >
-              <span
-                className={cn(
-                  "flex h-4 w-4 shrink-0 items-center justify-center rounded-full",
-                  i < 2 ? "bg-primary text-primary-foreground" : "border border-border bg-muted/40"
-                )}
-              >
-                {i < 2 ? (
-                  <CheckIcon className="h-2.5 w-2.5" strokeWidth={2.5} aria-hidden />
-                ) : (
-                  <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-                )}
-              </span>
-              <span className="font-mono text-[10px] text-foreground/80">{step}</span>
-              {i < 2 && (
-                <span className="ml-auto font-mono text-[8px] uppercase tracking-wider text-primary/80">
-                  done
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
-        <div>
-          <div className="mb-0.5 flex justify-between font-mono text-[8px] uppercase tracking-wider text-muted-foreground">
-            <span>Cycle</span>
-            <span>68%</span>
-          </div>
-          <div className="h-1 overflow-hidden rounded-full bg-primary/10">
-            <div className="h-full w-[68%] rounded-full bg-primary" />
-          </div>
-        </div>
-      </div>
+      <svg viewBox="0 0 80 80" className="h-16 w-16 text-primary" aria-hidden>
+        <path
+          d="M12 58 L28 22 L44 48 L58 18 L68 18"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.85"
+        />
+        <circle cx="68" cy="18" r="4" fill="currentColor" />
+      </svg>
     )
   }
-
   if (index === 2) {
     return (
-      <div className="space-y-2.5">
-        <div className="flex items-end justify-between gap-2 px-0.5">
-          {[
-            { glyph: "Aa", size: "text-2xl", weight: "font-normal" },
-            { glyph: "Ag", size: "text-xl", weight: "font-medium" },
-            { glyph: "Av", size: "text-lg", weight: "font-semibold" },
-          ].map((t) => (
-            <div key={t.glyph} className="flex flex-col items-center gap-0.5">
-              <span className={cn("leading-none tracking-tight text-foreground", t.size, t.weight)}>
-                {t.glyph}
-              </span>
-              <span className="font-mono text-[7px] uppercase tracking-widest text-muted-foreground">
-                type
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="flex items-center gap-1.5">
-          {["bg-primary", "bg-foreground", "bg-background border border-border", "bg-primary/25"].map(
-            (swatch, i) => (
-              <span
-                key={i}
-                className={cn("h-5 flex-1 rounded", swatch)}
-                aria-hidden
-              />
-            )
-          )}
-        </div>
-      </div>
+      <svg viewBox="0 0 80 80" className="h-16 w-16 text-primary" aria-hidden>
+        <circle cx="28" cy="40" r="18" fill="currentColor" opacity="0.9" />
+        <circle cx="48" cy="40" r="18" fill="currentColor" opacity="0.35" />
+        <circle cx="62" cy="40" r="12" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.5" />
+      </svg>
     )
   }
-
-  // Impact
-  const outcomes = [
-    { icon: ChatBubbleLeftRightIcon, label: "Trust" },
-    { icon: HeartIcon, label: "Clarity" },
-    { icon: SparklesIcon, label: "Results" },
-  ]
   return (
-    <div className="space-y-2">
-      <div className="flex gap-1.5">
-        {outcomes.map(({ icon: OutcomeIcon, label }) => (
-          <div
-            key={label}
-            className="flex flex-1 flex-col items-center gap-1 rounded-md border border-border/70 bg-background px-1.5 py-2"
-          >
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <OutcomeIcon className="h-3.5 w-3.5" aria-hidden />
-            </span>
-            <span className="font-mono text-[8px] uppercase tracking-wider text-muted-foreground">
-              {label}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div className="rounded-md border border-dashed border-primary/25 bg-primary/[0.04] px-2.5 py-1.5">
-        <p className="font-mono text-[9px] leading-relaxed text-muted-foreground">
-          outcome → decision → ship
-        </p>
-      </div>
-    </div>
+    <svg viewBox="0 0 80 80" className="h-16 w-16 text-primary" aria-hidden>
+      <path
+        d="M40 10 L46 32 L70 32 L50 46 L58 68 L40 54 L22 68 L30 46 L10 32 L34 32 Z"
+        fill="currentColor"
+        opacity="0.75"
+      />
+    </svg>
   )
 }
 
-/** What I Bring — select a principle, see it in practice */
+/** What I Bring — poster stage + dial (one composition, not list+card) */
 function PrinciplesStage() {
   const [active, setActive] = useState(0)
   const prefersReducedMotion = useReducedMotion()
   const current = workPrinciples[active]
   const Icon = current.icon
 
-  const go = (dir: -1 | 1) => {
-    setActive((i) => (i + dir + workPrinciples.length) % workPrinciples.length)
-  }
-
   return (
-    <div className="mt-2.5 flex min-h-0 flex-1 flex-col gap-2">
-      {/* 2×2 principle picker — stretches to match practice card */}
-      <div
-        className="grid min-h-[7.5rem] flex-1 grid-cols-2 grid-rows-2 gap-1.5"
-        role="tablist"
-        aria-label="Work principles"
-      >
-        {workPrinciples.map((item, i) => {
-          const isActive = active === i
-          return (
-            <button
-              key={item.label}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
-              onClick={() => setActive(i)}
-              className={cn(
-                "relative flex h-full flex-col justify-center rounded-lg border px-2.5 py-2 text-left transition-colors",
-                isActive
-                  ? "border-primary bg-primary text-primary-foreground shadow-sm shadow-primary/20"
-                  : "border-border/70 bg-background/60 text-muted-foreground hover:border-primary/30 hover:text-foreground"
-              )}
-            >
-              {isActive && (
-                <span
-                  aria-hidden
-                  className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-primary-foreground/70"
-                />
-              )}
-              <span
+    <div className="mt-3 flex flex-1 flex-col lg:min-h-0">
+      <div className="relative flex min-h-[22rem] flex-1 overflow-hidden rounded-2xl border border-border/60 bg-background/50 lg:min-h-0">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary)/0.12),transparent_55%)]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.35)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.35)_1px,transparent_1px)] bg-[size:1.25rem_1.25rem] opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]"
+        />
+
+        <div
+          className="relative z-10 flex shrink-0 flex-row border-b border-border/60 sm:flex-col sm:border-b-0 sm:border-r"
+          role="tablist"
+          aria-label="Work principles"
+        >
+          {workPrinciples.map((item, i) => {
+            const isActive = active === i
+            const roman = ["I", "II", "III", "IV"][i]
+            return (
+              <button
+                key={item.slug}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={item.label}
+                title={item.label}
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                onClick={() => setActive(i)}
                 className={cn(
-                  "font-mono text-[8px] tabular-nums tracking-wider",
-                  isActive ? "text-primary-foreground/65" : "text-muted-foreground/70"
+                  "relative flex flex-1 items-center justify-center px-3 py-3 transition-colors sm:flex-none sm:px-3.5 sm:py-4",
+                  isActive
+                    ? "text-primary"
+                    : "text-muted-foreground/55 hover:text-muted-foreground"
                 )}
               >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="mt-1 block text-[11px] font-medium leading-snug tracking-tight sm:text-[12px]">
-                {item.label}
-              </span>
-            </button>
-          )
-        })}
-      </div>
-
-      {/* Practice card — same height share as the picker */}
-      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-border/70 bg-background/70 shadow-[0_12px_40px_-28px_rgba(15,23,42,0.35)]">
-        <div className="flex shrink-0 items-center justify-between border-b border-border/60 px-3 py-1.5">
-          <div className="flex items-center gap-2">
-            <span className="flex gap-1" aria-hidden>
-              <span className="h-1.5 w-1.5 rounded-full bg-border" />
-              <span className="h-1.5 w-1.5 rounded-full bg-border" />
-              <span className="h-1.5 w-1.5 rounded-full bg-border" />
-            </span>
-            <span className="font-mono text-[9px] text-muted-foreground">
-              principle.{current.slug}
-            </span>
-          </div>
-          <span className="inline-flex items-center gap-1 font-mono text-[8px] uppercase tracking-[0.16em] text-primary">
-            <Icon className="h-3 w-3" aria-hidden />
-            {current.keyword}
-          </span>
+                {isActive && (
+                  <motion.span
+                    layoutId={prefersReducedMotion ? undefined : "principle-dial"}
+                    className="absolute inset-x-2 bottom-0 h-0.5 bg-primary sm:inset-x-auto sm:inset-y-2 sm:left-0 sm:h-auto sm:w-0.5"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                  />
+                )}
+                <span className="font-mono text-[11px] tracking-[0.08em]">{roman}</span>
+              </button>
+            )
+          })}
         </div>
 
-        <div className="flex min-h-0 flex-1 flex-col p-3">
+        <div className="relative z-10 flex min-w-0 flex-1 flex-col p-5 sm:p-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={current.slug}
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={prefersReducedMotion ? undefined : { opacity: 0, y: -6 }}
-              transition={{ duration: 0.25, ease }}
-              className="flex min-h-0 flex-1 flex-col"
+              exit={prefersReducedMotion ? undefined : { opacity: 0, y: -10 }}
+              transition={{ duration: 0.35, ease }}
+              className="relative flex h-full flex-col"
             >
-              <div className="min-h-0 flex-1">
-                <PrincipleCanvas index={active} />
+              <div className="flex items-center justify-between gap-3">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary">
+                  {current.short}
+                </p>
+                <Icon className="h-4 w-4 text-primary/70" aria-hidden />
               </div>
-              <p className="mt-2.5 shrink-0 text-[12px] leading-snug text-muted-foreground">
+
+              <h4 className="mt-6 font-sans text-[clamp(2.4rem,8vw,3.25rem)] font-normal leading-[0.92] tracking-tight text-foreground">
+                {current.keyword}
+              </h4>
+
+              <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                {current.label}
+              </p>
+
+              <p className="mt-5 max-w-[18rem] text-[13px] leading-relaxed text-muted-foreground">
                 {current.detail}
               </p>
+
+              <div className="mt-auto flex items-end justify-between gap-4 pt-8">
+                <PrincipleMark index={active} />
+                <p className="max-w-[7rem] text-right font-mono text-[9px] uppercase leading-relaxed tracking-[0.16em] text-muted-foreground/70">
+                  {current.keyword}
+                </p>
+              </div>
             </motion.div>
           </AnimatePresence>
-
-          <div className="mt-auto flex shrink-0 items-center justify-between gap-3 border-t border-border/50 pt-2">
-            <span className="font-mono text-[9px] tabular-nums text-muted-foreground">
-              {String(active + 1).padStart(2, "0")} /{" "}
-              {String(workPrinciples.length).padStart(2, "0")}
-            </span>
-
-            <div className="flex items-center gap-0.5">
-              <div className="mr-1.5 hidden gap-1 sm:flex" aria-hidden>
-                {workPrinciples.map((_, i) => (
-                  <span
-                    key={i}
-                    className={cn(
-                      "h-1 rounded-full transition-all",
-                      i === active ? "w-3.5 bg-primary" : "w-1.5 bg-border"
-                    )}
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                onClick={() => go(-1)}
-                className="rounded-md px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Prev
-              </button>
-              <button
-                type="button"
-                onClick={() => go(1)}
-                className="rounded-md px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Next
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -718,7 +584,7 @@ export function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease }}
             viewport={{ once: true }}
-            className="flex h-full min-h-0 flex-col lg:col-span-5"
+            className="flex min-h-0 flex-col lg:col-span-5 lg:h-full"
           >
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
               Profile
@@ -764,13 +630,13 @@ export function AboutSection() {
 
             <div
               id="about-what-i-bring"
-              className="mt-4 flex min-h-0 flex-1 flex-col border-t border-primary/10 pt-3.5"
+              className="mt-4 flex flex-col border-t border-primary/10 pt-3.5 lg:min-h-0 lg:flex-1"
             >
               <p className="shrink-0 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                 What I Bring
               </p>
               <p className="mt-1 max-w-xs shrink-0 text-[11px] leading-snug text-muted-foreground">
-                How I work — select a principle to see it in practice.
+                Four commitments. Hover a numeral to open one.
               </p>
               <PrinciplesStage />
             </div>

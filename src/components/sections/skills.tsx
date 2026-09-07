@@ -1,8 +1,9 @@
 "use client"
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
-import { Braces, Database } from "lucide-react"
+import Image from "next/image"
+import { Braces, Database, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { SectionHeading } from "@/components/section-heading"
 import {
@@ -89,169 +90,231 @@ const skillCategories: { num: string; title: string; skills: Skill[] }[] = [
 const workExperience = [
   {
     company: "Petrosphere Incorporated",
-    role: "Information Security & Digital Solutions Officer",
-    period: "2025 — Present",
-    type: "Full-time",
-    location: "Philippines",
-    description:
-      "Maintaining and securing WordPress-based digital assets — plugins, site infrastructure, and day-to-day digital solutions that keep the business online and protected.",
-    focus: ["Security", "WordPress", "Infrastructure"],
-    current: true,
+    employment: "Full-time",
+    duration: "11 mos",
+    workplace: "On-site",
+    initial: "P",
+    logo: "/companies/petrosphere.png",
+    roles: [
+      {
+        title: "Information Systems & Training Officer",
+        period: "Sep 2026 — Present",
+        tenure: "1 mo",
+        location: "Palawan, Mimaropa, Philippines",
+        description:
+          "Additional responsibilities as a training facilitator in the Training Department. Facilitate training activities for programs such as ACLS, BOSH, COSH, and more.",
+      },
+      {
+        title: "Information Security & Digital Solutions Associate",
+        period: "Nov 2025 — Present",
+        tenure: "11 mos",
+        location: "Puerto Princesa, Mimaropa, Philippines",
+        description:
+          "Supporting the development of the company’s core systems while assisting in protecting digital assets and strengthening security practices. Implementing secure, reliable, and scalable digital solutions.",
+        focus: ["Web Development", "Information Security"],
+      },
+    ],
   },
   {
     company: "Nova North SG",
-    role: "Freelance Web Developer",
-    period: "2025",
-    type: "Contract",
-    location: "Singapore · Remote",
-    description:
-      "Rebuilt the business website with a modern design and stronger UI/UX — clearer navigation, better accessibility, and a browsing experience built for engagement.",
-    focus: ["Next.js", "UI/UX", "Responsive"],
-    current: false,
+    employment: "Contract",
+    duration: "2025",
+    workplace: "Remote",
+    initial: "N",
+    logo: undefined as string | undefined,
+    roles: [
+      {
+        title: "Freelance Web Developer",
+        period: "2025",
+        location: "Singapore · Remote",
+        description:
+          "Rebuilt the business website with a modern design and stronger UI/UX — clearer navigation, better accessibility, and a browsing experience built for engagement.",
+        focus: ["Next.js", "UI/UX", "Responsive"],
+      },
+    ],
   },
   {
     company: "Princesa Garden Island Resort and Spa",
-    role: "Service Associate (Oncall)",
-    period: "2025",
-    type: "On-call",
-    location: "Puerto Princesa",
-    description:
-      "Delivered guest-facing service — preparing tables, serving with care, and keeping the dining environment clean and welcoming under real-time hospitality pressure.",
-    focus: ["Service", "Teamwork", "Detail"],
-    current: false,
+    employment: "On-call",
+    duration: "2025",
+    workplace: "On-site",
+    initial: "PG",
+    logo: "/companies/princesa-garden.png",
+    roles: [
+      {
+        title: "Service Associate (Oncall)",
+        period: "2025",
+        location: "Puerto Princesa",
+        description:
+          "Delivered guest-facing service — preparing tables, serving with care, and keeping the dining environment clean and welcoming under real-time hospitality pressure.",
+        focus: ["Service", "Teamwork", "Detail"],
+      },
+    ],
   },
 ] as const
 
 const ease = [0.22, 1, 0.36, 1] as const
 
 function ExperienceEditorial() {
-  const [active, setActive] = useState(0)
-  const prefersReducedMotion = useReducedMotion()
+  const [openCompany, setOpenCompany] = useState<string | null>(
+    workExperience[0]?.company ?? null
+  )
 
   return (
     <div>
       <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
         Experience
       </p>
-      <p className="mt-1 text-sm text-muted-foreground">Where I&apos;ve worked.</p>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Where I&apos;ve worked — expand a company for details.
+      </p>
 
-      <div className="relative mt-8">
-        <div aria-hidden className="absolute bottom-2 left-[5px] top-2 w-px bg-border" />
-        <motion.div
-          aria-hidden
-          className="absolute left-[5px] top-2 w-px origin-top bg-primary"
-          initial={false}
-          animate={{
-            height: `calc(${(active / Math.max(workExperience.length - 1, 1)) * 100}% )`,
-          }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease }}
-          style={{ maxHeight: "calc(100% - 1rem)" }}
-        />
+      <ul className="mt-8 space-y-3">
+        {workExperience.map((exp, companyIndex) => {
+          const multiRole = exp.roles.length > 1
+          const isOpen = openCompany === exp.company
+          const latestRole = exp.roles[0]
 
-        <ul className="space-y-0">
-          {workExperience.map((exp, index) => {
-            const isActive = active === index
-            const isPast = index <= active
-
-            return (
-              <li key={exp.company} className="border-b border-border/80 last:border-b-0">
-                <button
-                  type="button"
-                  onMouseEnter={() => setActive(index)}
-                  onFocus={() => setActive(index)}
-                  onClick={() => setActive(index)}
-                  className="group relative grid w-full grid-cols-[16px_1fr] gap-4 py-4 text-left"
+          return (
+            <motion.li
+              key={exp.company}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: companyIndex * 0.06, ease }}
+              viewport={{ once: true }}
+              className="overflow-hidden rounded-xl border border-border/70 bg-background/40"
+            >
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                onClick={() =>
+                  setOpenCompany((current) =>
+                    current === exp.company ? null : exp.company
+                  )
+                }
+                className="flex w-full items-start gap-3.5 p-3.5 text-left transition-colors hover:bg-muted/30 sm:p-4"
+              >
+                <div
+                  aria-hidden
+                  className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-md bg-background"
                 >
-                  <span className="relative z-10 mt-1.5 flex justify-center">
-                    <motion.span
-                      className={cn(
-                        "block h-2.5 w-2.5 rounded-full border-2 border-background",
-                        isActive
-                          ? "bg-primary"
-                          : isPast
-                            ? "bg-primary/70"
-                            : "bg-muted-foreground/30 group-hover:bg-primary/50"
-                      )}
-                      animate={
-                        prefersReducedMotion
-                          ? undefined
-                          : {
-                              scale: isActive ? 1.25 : 1,
-                              boxShadow: isActive
-                                ? "0 0 0 4px hsl(var(--primary) / 0.15)"
-                                : "0 0 0 0px hsl(var(--primary) / 0)",
-                            }
-                      }
-                      transition={{ duration: 0.25, ease }}
+                  {exp.logo ? (
+                    <Image
+                      src={exp.logo}
+                      alt=""
+                      fill
+                      className="object-contain p-1"
+                      sizes="44px"
                     />
-                  </span>
+                  ) : (
+                    <span className="font-mono text-[11px] font-medium tracking-tight text-foreground">
+                      {exp.initial}
+                    </span>
+                  )}
+                </div>
 
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                      <p
-                        className={cn(
-                          "font-mono text-[11px] tracking-tight transition-colors duration-300",
-                          isActive ? "text-primary" : "text-muted-foreground"
-                        )}
-                      >
-                        {exp.period}
+                <div className="min-w-0 flex-1 pt-0.5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <h4 className="font-sans text-[15px] font-medium tracking-tight text-foreground">
+                        {exp.company}
+                      </h4>
+                      <p className="mt-0.5 text-[13px] text-muted-foreground">
+                        {exp.employment}
+                        <span className="mx-1.5 text-border">·</span>
+                        {exp.duration}
+                        {exp.workplace ? (
+                          <>
+                            <span className="mx-1.5 text-border">·</span>
+                            {exp.workplace}
+                          </>
+                        ) : null}
                       </p>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/70">
-                        {exp.type}
-                      </span>
-                      {exp.current && (
-                        <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-primary">
-                          Present
-                        </span>
+                      {!isOpen && (
+                        <p className="mt-1.5 truncate text-[13px] text-foreground/75">
+                          {latestRole.title}
+                          {multiRole ? (
+                            <span className="text-muted-foreground">
+                              {" "}
+                              · {exp.roles.length} roles
+                            </span>
+                          ) : null}
+                        </p>
                       )}
                     </div>
-
-                    <h4
+                    <ChevronDown
                       className={cn(
-                        "mt-1.5 font-sans text-base font-normal tracking-tight transition-colors duration-300",
-                        isActive ? "text-foreground" : "text-foreground/65 group-hover:text-foreground"
+                        "mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300",
+                        isOpen && "rotate-180"
                       )}
-                    >
-                      {exp.company}
-                    </h4>
-
-                    <p
-                      className={cn(
-                        "mt-1 text-sm transition-colors duration-300",
-                        isActive ? "text-foreground/80" : "text-muted-foreground"
-                      )}
-                    >
-                      {exp.role}
-                    </p>
-
-                    <AnimatePresence initial={false}>
-                      {isActive && (
-                        <motion.div
-                          key="detail"
-                          initial={prefersReducedMotion ? false : { opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={prefersReducedMotion ? undefined : { opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease }}
-                          className="overflow-hidden"
-                        >
-                          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                            {exp.description}
-                          </p>
-                          <p className="mt-2 font-mono text-[11px] text-muted-foreground">
-                            {exp.location}
-                            <span className="mx-2 text-border">·</span>
-                            {exp.focus.join(" · ")}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                      aria-hidden
+                    />
                   </div>
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
+                </div>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key="panel"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease }}
+                    className="overflow-hidden"
+                  >
+                    <div
+                      className={cn(
+                        "border-t border-border/60 px-3.5 pb-4 pt-3 sm:px-4",
+                        multiRole ? "ml-[21px] border-l border-l-border pl-[21px]" : "sm:ml-[55px]"
+                      )}
+                    >
+                      <ul className={cn(multiRole ? "space-y-5" : "space-y-0")}>
+                        {exp.roles.map((role) => (
+                          <li key={role.title} className="relative">
+                            {multiRole && (
+                              <span
+                                aria-hidden
+                                className="absolute -left-[25px] top-[7px] h-2 w-2 rounded-full bg-muted-foreground/55 ring-[3px] ring-background"
+                              />
+                            )}
+
+                            <h5 className="font-sans text-[15px] font-medium leading-snug tracking-tight text-foreground">
+                              {role.title}
+                            </h5>
+                            <p className="mt-1 text-[13px] text-muted-foreground">
+                              {role.period}
+                              {"tenure" in role && role.tenure ? (
+                                <>
+                                  <span className="mx-1.5 text-border">·</span>
+                                  {role.tenure}
+                                </>
+                              ) : null}
+                            </p>
+                            <p className="text-[13px] text-muted-foreground">
+                              {role.location}
+                            </p>
+                            <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
+                              {role.description}
+                            </p>
+                            {"focus" in role &&
+                              role.focus &&
+                              role.focus.length > 0 && (
+                                <p className="mt-2.5 font-mono text-[11px] text-foreground/80">
+                                  {role.focus.join(", ")}
+                                </p>
+                              )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.li>
+          )
+        })}
+      </ul>
     </div>
   )
 }
@@ -322,7 +385,7 @@ function SkillCategory({
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="min-h-screen bg-muted/30 px-4 py-20 md:px-8">
+    <section id="skills" className="bg-muted/30 px-4 py-20 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <SectionHeading number="II" title="My Stack & Experience" />
 

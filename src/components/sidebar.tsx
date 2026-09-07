@@ -114,14 +114,14 @@ export function Sidebar() {
       {/* Desktop sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-0 z-50 hidden h-screen w-52 flex-col border-r border-border/60 bg-background/80 px-6 py-8 backdrop-blur-xl md:flex"
+          "fixed left-0 top-0 z-50 hidden h-screen w-56 flex-col border-r border-border/60 bg-background/80 px-6 py-8 backdrop-blur-xl md:flex"
         )}
       >
-        <div className="mb-10">
-          <p className="font-sans font-normal text-[15px] tracking-tight text-foreground">
+        <div className="mb-10 pr-1">
+          <p className="font-sans text-[15px] font-normal leading-snug tracking-tight text-foreground">
             John Aivanne
           </p>
-          <p className="mt-0.5 font-mono text-[12px] text-muted-foreground">
+          <p className="mt-1 font-mono text-[12px] leading-snug text-muted-foreground">
             Full-stack Developer
           </p>
         </div>
@@ -149,8 +149,10 @@ export function Sidebar() {
         className="fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-border/60 bg-background px-7 py-10 md:hidden"
       >
         <div className="mb-12">
-          <p className="font-sans font-normal text-lg tracking-tight">John Aivanne</p>
-          <p className="mt-1 font-mono text-[13px] text-muted-foreground">
+          <p className="font-sans text-lg font-normal leading-snug tracking-tight">
+            John Aivanne
+          </p>
+          <p className="mt-1 font-mono text-[13px] leading-snug text-muted-foreground">
             Full-stack Developer
           </p>
         </div>

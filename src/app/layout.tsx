@@ -37,7 +37,7 @@ export default function RootLayout({
             <GalaxyBackground />
             <div className="relative z-10 flex min-h-screen">
               <Sidebar />
-              <main className="relative flex-1 ml-0 md:ml-52 transition-all duration-300">
+              <main className="relative min-w-0 flex-1 overflow-x-hidden ml-0 md:ml-56 transition-all duration-300">
                 {children}
               </main>
             </div>
